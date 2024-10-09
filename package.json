@@ -1,0 +1,26 @@
+{
+  "name": "guziri",
+  "version": "1.0.0",
+  "description": "Repositorio para el compilador",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "jest",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LuisAGuzmanI/guziri.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LuisAGuzmanI/guziri/issues"
+  },
+  "homepage": "https://github.com/LuisAGuzmanI/guziri#readme",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.7"
+  }
+}
