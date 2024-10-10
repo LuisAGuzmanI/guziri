@@ -1,25 +1,24 @@
 # Guziri
-Este código es una implemetación de **stacks**, **queues** y **hashtables** utilizando clases en JavaScript para la tarea 1 de la clase *Desarrollo de aplicaciones avanzadas de ciencias computacionales (Gpo 502)*.
+This code is an implementation of **stacks**, **queues**, and **hashtables** using classes in JavaScript for assignment 1 of the class *Advanced Applications Development in Computer Science (Group 502)*.
 
-## Datos del alumno
+## Student Information
 
-* Nombre: Luis Ángel Guzmán Iribe
-* Matricula: a01747157
-* Correo: a01747157@tec.mx
+* Name: Luis Ángel Guzmán Iribe
+* ID: a01747157
+* Email: a01747157@tec.mx
 
-
-## Estructura del repositorio
+## Repository Structure
 
 * `/classes`
-    Implementaciones de las estructuras de datos especificadas en la tarea 1
+    Implementations of the data structures specified in assignment 1
 * `/tests`
-    Casos de prueba para cada una de las estructuras de datos implementadas
+    Test cases for each of the implemented data structures
 * `index.js`
-    Archivo raiz de l repositorio, actualmente no tiene ningún uso.
-    
-## Test
-1. Para ejecutar los tests que prueban el funcionamiento de las implementaciones necesita instalar `node`.
+    Root file of the repository, currently not in use.
 
-2. Una vez instalado, descargar el repositorio y ejecutar `npm install` para instalar las dependencias necesarias.
+## Testing
+1. To run the tests that verify the functionality of the implementations, you need to install `node`.
 
-3. Ejecutar `npm run test` para ejecutar las pruebas.
+2. Once installed, download the repository and run `npm install` to install the necessary dependencies.
+
+3. Run `npm run test` to execute the tests.
