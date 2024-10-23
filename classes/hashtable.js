@@ -1,4 +1,4 @@
-class HashTable {
+export default class HashTable {
     constructor(){
         this.table = {};
     }
@@ -23,5 +23,3 @@ class HashTable {
         return JSON.stringify(this.table);
     }
 }
-
-module.exports = HashTable

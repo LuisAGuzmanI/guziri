@@ -1,0 +1,50 @@
+programa test1;
+
+vars a: entero;
+
+nula fibonacci(n:entero)
+{
+    vars contador, f, f_1, f_2:entero;
+    {
+        contador = 1;
+        f_1 = 1;
+        f_2 = 1;
+
+        si(n < 0){
+            escribe("Error");
+        };
+
+        si(n == 0) {
+            escribe("Fibonacci ", n, " :", 0);
+        };
+
+        si(n == 1) {
+            escribe("Fibonacci ", n, " :", f_1);
+        };
+
+        si(n == 2) {
+            escribe("Fibonacci ", n, " :", f_2);
+        };
+
+        si(n > 2) {
+            mientras(contador < n) haz
+            {
+                f = f_1 + f_2;
+                f_1 = f_2;
+                f_2 = f;
+
+                contador = contador + 1;
+            };
+
+            escribe("Fibonacci ", n, " :", a + b);
+        };
+
+    }
+};
+
+inicio
+{
+    a = 3;
+    fibonacci(a*2 + 1);
+}
+fin

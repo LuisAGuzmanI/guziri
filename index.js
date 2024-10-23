@@ -1,14 +1,23 @@
-const Queue = require("./classes/queue.js");
-const Stack = require("./classes/stack.js");
+import { readFile } from 'fs/promises';
 
-// Example usage:
-const queue = new Queue();
-queue.push(10);
-queue.push(20);
-queue.push(30);
-console.log(queue.front());  // Output: 10
-console.log(queue.pop()); // Output: 10
-console.log(queue.toString());               // Output: 20,30
-console.log(queue.size());   // Output: 2
-queue.clear();
-console.log(queue.isEmpty()); // Output: true
+import antlr4 from "antlr4";
+import PatitoLexer from "./PatitoLexer.js";
+import PatitoParserParser from "./PatitoParserParser.js";
+
+
+try {
+    const text = await readFile('./tests/patito/fibonacci.txt', { encoding: 'utf8' });
+
+    const chars = new antlr4.InputStream(text);
+    const lexer = new PatitoLexer(chars);
+    const tokens = new antlr4.CommonTokenStream(lexer);
+    const parser = new PatitoParserParser(tokens);
+
+    parser.buildParseTrees = true;
+    const tree = parser.programa();
+
+    console.log(tree.toStringTree(parser.ruleNames));
+
+} catch (err) {
+    console.error("Coudln't read file", err);
+}

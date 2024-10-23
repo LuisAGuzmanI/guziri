@@ -1,4 +1,4 @@
-const Stack = require("../classes/stack")
+import Stack from"../../classes/stack";
 
 describe('Stack', () => {
     let stack;

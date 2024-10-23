@@ -1,0 +1,9 @@
+programa test1;
+
+vars a: entero;
+
+inicio
+{
+    a = 
+}
+fin

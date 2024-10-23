@@ -1,4 +1,4 @@
-const Queue = require("../classes/queue")
+import Queue from"../../classes/queue";
 
 describe('Queue', () => {
     let queue;

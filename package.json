@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "description": "Repositorio para el compilador",
   "main": "index.js",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
-    "test": "jest",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest",
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "antlr4": "antlr4 -Dlanguage=JavaScript PatitoLexer.g4 && antlr4 -Dlanguage=JavaScript PatitoParser.g4"
   },
   "repository": {
     "type": "git",
@@ -22,5 +23,8 @@
   "devDependencies": {
     "jest": "^29.7.0",
     "nodemon": "^3.1.7"
+  },
+  "dependencies": {
+    "antlr4": "^4.13.2"
   }
 }

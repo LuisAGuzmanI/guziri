@@ -1,4 +1,4 @@
-const HashTable = require("../classes/hashtable")
+import HashTable from "../../classes/hashtable";
 
 describe('HashTable', () => {
     let hashtable;
