@@ -2,91 +2,92 @@
 // jshint ignore: start
 import antlr4 from 'antlr4';
 import PatitoParserListener from './PatitoParserListener.js';
-const serializedATN = [4,1,33,287,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,
+const serializedATN = [4,1,33,291,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,
 4,2,5,7,5,2,6,7,6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,
 2,13,7,13,2,14,7,14,2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,2,
 20,7,20,2,21,7,21,2,22,7,22,2,23,7,23,2,24,7,24,2,25,7,25,2,26,7,26,2,27,
 7,27,2,28,7,28,2,29,7,29,2,30,7,30,2,31,7,31,2,32,7,32,2,33,7,33,2,34,7,
-34,2,35,7,35,2,36,7,36,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,1,3,1,86,
-8,1,1,2,1,2,1,2,1,2,1,3,1,3,3,3,94,8,3,1,4,1,4,1,4,1,4,1,4,1,5,1,5,1,5,1,
-6,1,6,1,6,1,6,3,6,108,8,6,1,7,1,7,1,7,1,7,3,7,114,8,7,1,8,1,8,1,8,1,8,1,
-8,1,8,1,8,1,8,1,8,1,8,1,8,1,9,1,9,1,9,1,9,3,9,131,8,9,1,10,1,10,1,10,1,10,
-1,10,3,10,138,8,10,1,11,1,11,1,11,1,11,1,12,1,12,1,13,1,13,1,13,1,13,1,14,
-1,14,1,14,1,14,3,14,154,8,14,1,15,1,15,1,15,1,15,1,15,3,15,161,8,15,1,16,
-1,16,1,16,1,16,1,16,1,17,1,17,1,17,1,17,1,17,1,17,1,17,1,17,1,18,1,18,1,
-18,3,18,179,8,18,1,19,1,19,1,19,1,19,1,19,1,19,1,19,1,19,1,20,1,20,1,20,
-1,20,1,20,1,20,1,21,1,21,1,21,1,21,3,21,199,8,21,1,22,1,22,1,22,1,22,1,22,
-3,22,206,8,22,1,23,1,23,1,23,1,23,1,23,1,23,1,24,1,24,1,24,1,24,3,24,218,
-8,24,1,25,1,25,1,25,1,25,1,25,3,25,225,8,25,1,26,1,26,3,26,229,8,26,1,27,
-1,27,1,27,1,27,3,27,235,8,27,1,28,1,28,1,28,1,28,1,28,1,28,1,28,1,28,3,28,
-245,8,28,1,29,1,29,1,29,1,30,1,30,1,30,1,30,1,30,3,30,255,8,30,1,31,1,31,
-1,31,1,32,1,32,1,32,1,32,1,32,3,32,265,8,32,1,33,1,33,1,33,1,33,1,33,1,33,
-1,33,3,33,274,8,33,1,34,1,34,1,34,3,34,279,8,34,1,35,1,35,3,35,283,8,35,
-1,36,1,36,1,36,0,0,37,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,
-38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,0,2,1,0,3,4,1,0,12,
-13,278,0,74,1,0,0,0,2,85,1,0,0,0,4,87,1,0,0,0,6,93,1,0,0,0,8,95,1,0,0,0,
-10,100,1,0,0,0,12,107,1,0,0,0,14,113,1,0,0,0,16,115,1,0,0,0,18,130,1,0,0,
-0,20,137,1,0,0,0,22,139,1,0,0,0,24,143,1,0,0,0,26,145,1,0,0,0,28,153,1,0,
-0,0,30,160,1,0,0,0,32,162,1,0,0,0,34,167,1,0,0,0,36,178,1,0,0,0,38,180,1,
-0,0,0,40,188,1,0,0,0,42,198,1,0,0,0,44,205,1,0,0,0,46,207,1,0,0,0,48,217,
-1,0,0,0,50,224,1,0,0,0,52,228,1,0,0,0,54,234,1,0,0,0,56,244,1,0,0,0,58,246,
-1,0,0,0,60,254,1,0,0,0,62,256,1,0,0,0,64,264,1,0,0,0,66,273,1,0,0,0,68,278,
-1,0,0,0,70,282,1,0,0,0,72,284,1,0,0,0,74,75,5,1,0,0,75,76,5,15,0,0,76,77,
-5,17,0,0,77,78,3,2,1,0,78,79,3,14,7,0,79,80,5,10,0,0,80,81,3,26,13,0,81,
-82,5,11,0,0,82,1,1,0,0,0,83,86,3,4,2,0,84,86,1,0,0,0,85,83,1,0,0,0,85,84,
-1,0,0,0,86,3,1,0,0,0,87,88,5,2,0,0,88,89,3,8,4,0,89,90,3,6,3,0,90,5,1,0,
-0,0,91,94,3,8,4,0,92,94,1,0,0,0,93,91,1,0,0,0,93,92,1,0,0,0,94,7,1,0,0,0,
-95,96,3,10,5,0,96,97,5,18,0,0,97,98,3,24,12,0,98,99,5,17,0,0,99,9,1,0,0,
-0,100,101,5,15,0,0,101,102,3,12,6,0,102,11,1,0,0,0,103,104,5,19,0,0,104,
-105,5,15,0,0,105,108,3,12,6,0,106,108,1,0,0,0,107,103,1,0,0,0,107,106,1,
-0,0,0,108,13,1,0,0,0,109,110,3,16,8,0,110,111,3,14,7,0,111,114,1,0,0,0,112,
-114,1,0,0,0,113,109,1,0,0,0,113,112,1,0,0,0,114,15,1,0,0,0,115,116,5,5,0,
-0,116,117,5,15,0,0,117,118,5,20,0,0,118,119,3,18,9,0,119,120,5,21,0,0,120,
-121,5,22,0,0,121,122,3,2,1,0,122,123,3,26,13,0,123,124,5,23,0,0,124,125,
-5,17,0,0,125,17,1,0,0,0,126,127,3,22,11,0,127,128,3,20,10,0,128,131,1,0,
-0,0,129,131,1,0,0,0,130,126,1,0,0,0,130,129,1,0,0,0,131,19,1,0,0,0,132,133,
-5,19,0,0,133,134,3,22,11,0,134,135,3,20,10,0,135,138,1,0,0,0,136,138,1,0,
-0,0,137,132,1,0,0,0,137,136,1,0,0,0,138,21,1,0,0,0,139,140,5,15,0,0,140,
-141,5,18,0,0,141,142,3,24,12,0,142,23,1,0,0,0,143,144,7,0,0,0,144,25,1,0,
-0,0,145,146,5,22,0,0,146,147,3,28,14,0,147,148,5,23,0,0,148,27,1,0,0,0,149,
-150,3,30,15,0,150,151,3,28,14,0,151,154,1,0,0,0,152,154,1,0,0,0,153,149,
-1,0,0,0,153,152,1,0,0,0,154,29,1,0,0,0,155,161,3,32,16,0,156,161,3,34,17,
-0,157,161,3,38,19,0,158,161,3,40,20,0,159,161,3,46,23,0,160,155,1,0,0,0,
-160,156,1,0,0,0,160,157,1,0,0,0,160,158,1,0,0,0,160,159,1,0,0,0,161,31,1,
-0,0,0,162,163,5,15,0,0,163,164,5,24,0,0,164,165,3,54,27,0,165,166,5,17,0,
-0,166,33,1,0,0,0,167,168,5,6,0,0,168,169,5,20,0,0,169,170,3,54,27,0,170,
-171,5,21,0,0,171,172,3,26,13,0,172,173,3,36,18,0,173,174,5,17,0,0,174,35,
-1,0,0,0,175,176,5,7,0,0,176,179,3,26,13,0,177,179,1,0,0,0,178,175,1,0,0,
-0,178,177,1,0,0,0,179,37,1,0,0,0,180,181,5,8,0,0,181,182,5,20,0,0,182,183,
-3,54,27,0,183,184,5,21,0,0,184,185,5,9,0,0,185,186,3,26,13,0,186,187,5,17,
-0,0,187,39,1,0,0,0,188,189,5,15,0,0,189,190,5,20,0,0,190,191,3,42,21,0,191,
-192,5,21,0,0,192,193,5,17,0,0,193,41,1,0,0,0,194,195,3,54,27,0,195,196,3,
-44,22,0,196,199,1,0,0,0,197,199,1,0,0,0,198,194,1,0,0,0,198,197,1,0,0,0,
-199,43,1,0,0,0,200,201,5,19,0,0,201,202,3,54,27,0,202,203,3,44,22,0,203,
-206,1,0,0,0,204,206,1,0,0,0,205,200,1,0,0,0,205,204,1,0,0,0,206,45,1,0,0,
-0,207,208,5,14,0,0,208,209,5,20,0,0,209,210,3,48,24,0,210,211,5,21,0,0,211,
-212,5,17,0,0,212,47,1,0,0,0,213,214,3,52,26,0,214,215,3,50,25,0,215,218,
-1,0,0,0,216,218,1,0,0,0,217,213,1,0,0,0,217,216,1,0,0,0,218,49,1,0,0,0,219,
-220,5,19,0,0,220,221,3,52,26,0,221,222,3,50,25,0,222,225,1,0,0,0,223,225,
-1,0,0,0,224,219,1,0,0,0,224,223,1,0,0,0,225,51,1,0,0,0,226,229,3,54,27,0,
-227,229,5,16,0,0,228,226,1,0,0,0,228,227,1,0,0,0,229,53,1,0,0,0,230,231,
-3,58,29,0,231,232,3,56,28,0,232,235,1,0,0,0,233,235,3,58,29,0,234,230,1,
-0,0,0,234,233,1,0,0,0,235,55,1,0,0,0,236,237,5,26,0,0,237,245,3,58,29,0,
-238,239,5,25,0,0,239,245,3,58,29,0,240,241,5,28,0,0,241,245,3,58,29,0,242,
-243,5,27,0,0,243,245,3,58,29,0,244,236,1,0,0,0,244,238,1,0,0,0,244,240,1,
-0,0,0,244,242,1,0,0,0,245,57,1,0,0,0,246,247,3,62,31,0,247,248,3,60,30,0,
-248,59,1,0,0,0,249,250,5,29,0,0,250,255,3,58,29,0,251,252,5,30,0,0,252,255,
-3,58,29,0,253,255,1,0,0,0,254,249,1,0,0,0,254,251,1,0,0,0,254,253,1,0,0,
-0,255,61,1,0,0,0,256,257,3,66,33,0,257,258,3,64,32,0,258,63,1,0,0,0,259,
-260,5,31,0,0,260,265,3,66,33,0,261,262,5,32,0,0,262,265,3,66,33,0,263,265,
-1,0,0,0,264,259,1,0,0,0,264,261,1,0,0,0,264,263,1,0,0,0,265,65,1,0,0,0,266,
-267,5,20,0,0,267,268,3,54,27,0,268,269,5,21,0,0,269,274,1,0,0,0,270,271,
-3,68,34,0,271,272,3,70,35,0,272,274,1,0,0,0,273,266,1,0,0,0,273,270,1,0,
-0,0,274,67,1,0,0,0,275,279,5,29,0,0,276,279,5,30,0,0,277,279,1,0,0,0,278,
-275,1,0,0,0,278,276,1,0,0,0,278,277,1,0,0,0,279,69,1,0,0,0,280,283,5,15,
-0,0,281,283,3,72,36,0,282,280,1,0,0,0,282,281,1,0,0,0,283,71,1,0,0,0,284,
-285,7,1,0,0,285,73,1,0,0,0,21,85,93,107,113,130,137,153,160,178,198,205,
-217,224,228,234,244,254,264,273,278,282];
+34,2,35,7,35,2,36,7,36,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,1,3,
+1,87,8,1,1,2,1,2,1,2,1,2,1,3,1,3,3,3,95,8,3,1,4,1,4,1,4,1,4,1,4,1,4,1,5,
+1,5,1,5,1,6,1,6,1,6,1,6,3,6,110,8,6,1,7,1,7,1,7,1,7,3,7,116,8,7,1,8,1,8,
+1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,9,1,9,1,9,1,9,3,9,134,8,9,1,10,
+1,10,1,10,1,10,1,10,3,10,141,8,10,1,11,1,11,1,11,1,11,1,11,1,12,1,12,1,13,
+1,13,1,13,1,13,1,14,1,14,1,14,1,14,3,14,158,8,14,1,15,1,15,1,15,1,15,1,15,
+3,15,165,8,15,1,16,1,16,1,16,1,16,1,16,1,17,1,17,1,17,1,17,1,17,1,17,1,17,
+1,17,1,18,1,18,1,18,3,18,183,8,18,1,19,1,19,1,19,1,19,1,19,1,19,1,19,1,19,
+1,20,1,20,1,20,1,20,1,20,1,20,1,21,1,21,1,21,1,21,3,21,203,8,21,1,22,1,22,
+1,22,1,22,1,22,3,22,210,8,22,1,23,1,23,1,23,1,23,1,23,1,23,1,24,1,24,1,24,
+1,24,3,24,222,8,24,1,25,1,25,1,25,1,25,1,25,3,25,229,8,25,1,26,1,26,3,26,
+233,8,26,1,27,1,27,1,27,1,27,3,27,239,8,27,1,28,1,28,1,28,1,28,1,28,1,28,
+1,28,1,28,3,28,249,8,28,1,29,1,29,1,29,1,30,1,30,1,30,1,30,1,30,3,30,259,
+8,30,1,31,1,31,1,31,1,32,1,32,1,32,1,32,1,32,3,32,269,8,32,1,33,1,33,1,33,
+1,33,1,33,1,33,1,33,3,33,278,8,33,1,34,1,34,1,34,3,34,283,8,34,1,35,1,35,
+3,35,287,8,35,1,36,1,36,1,36,0,0,37,0,2,4,6,8,10,12,14,16,18,20,22,24,26,
+28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,0,2,
+1,0,3,4,1,0,12,13,282,0,74,1,0,0,0,2,86,1,0,0,0,4,88,1,0,0,0,6,94,1,0,0,
+0,8,96,1,0,0,0,10,102,1,0,0,0,12,109,1,0,0,0,14,115,1,0,0,0,16,117,1,0,0,
+0,18,133,1,0,0,0,20,140,1,0,0,0,22,142,1,0,0,0,24,147,1,0,0,0,26,149,1,0,
+0,0,28,157,1,0,0,0,30,164,1,0,0,0,32,166,1,0,0,0,34,171,1,0,0,0,36,182,1,
+0,0,0,38,184,1,0,0,0,40,192,1,0,0,0,42,202,1,0,0,0,44,209,1,0,0,0,46,211,
+1,0,0,0,48,221,1,0,0,0,50,228,1,0,0,0,52,232,1,0,0,0,54,238,1,0,0,0,56,248,
+1,0,0,0,58,250,1,0,0,0,60,258,1,0,0,0,62,260,1,0,0,0,64,268,1,0,0,0,66,277,
+1,0,0,0,68,282,1,0,0,0,70,286,1,0,0,0,72,288,1,0,0,0,74,75,5,1,0,0,75,76,
+5,15,0,0,76,77,6,0,-1,0,77,78,5,17,0,0,78,79,3,2,1,0,79,80,3,14,7,0,80,81,
+5,10,0,0,81,82,3,26,13,0,82,83,5,11,0,0,83,1,1,0,0,0,84,87,3,4,2,0,85,87,
+1,0,0,0,86,84,1,0,0,0,86,85,1,0,0,0,87,3,1,0,0,0,88,89,5,2,0,0,89,90,3,8,
+4,0,90,91,3,6,3,0,91,5,1,0,0,0,92,95,3,8,4,0,93,95,1,0,0,0,94,92,1,0,0,0,
+94,93,1,0,0,0,95,7,1,0,0,0,96,97,3,10,5,0,97,98,5,18,0,0,98,99,3,24,12,0,
+99,100,6,4,-1,0,100,101,5,17,0,0,101,9,1,0,0,0,102,103,5,15,0,0,103,104,
+3,12,6,0,104,11,1,0,0,0,105,106,5,19,0,0,106,107,5,15,0,0,107,110,3,12,6,
+0,108,110,1,0,0,0,109,105,1,0,0,0,109,108,1,0,0,0,110,13,1,0,0,0,111,112,
+3,16,8,0,112,113,3,14,7,0,113,116,1,0,0,0,114,116,1,0,0,0,115,111,1,0,0,
+0,115,114,1,0,0,0,116,15,1,0,0,0,117,118,5,5,0,0,118,119,5,15,0,0,119,120,
+6,8,-1,0,120,121,5,20,0,0,121,122,3,18,9,0,122,123,5,21,0,0,123,124,5,22,
+0,0,124,125,3,2,1,0,125,126,3,26,13,0,126,127,5,23,0,0,127,128,5,17,0,0,
+128,17,1,0,0,0,129,130,3,22,11,0,130,131,3,20,10,0,131,134,1,0,0,0,132,134,
+1,0,0,0,133,129,1,0,0,0,133,132,1,0,0,0,134,19,1,0,0,0,135,136,5,19,0,0,
+136,137,3,22,11,0,137,138,3,20,10,0,138,141,1,0,0,0,139,141,1,0,0,0,140,
+135,1,0,0,0,140,139,1,0,0,0,141,21,1,0,0,0,142,143,5,15,0,0,143,144,5,18,
+0,0,144,145,3,24,12,0,145,146,6,11,-1,0,146,23,1,0,0,0,147,148,7,0,0,0,148,
+25,1,0,0,0,149,150,5,22,0,0,150,151,3,28,14,0,151,152,5,23,0,0,152,27,1,
+0,0,0,153,154,3,30,15,0,154,155,3,28,14,0,155,158,1,0,0,0,156,158,1,0,0,
+0,157,153,1,0,0,0,157,156,1,0,0,0,158,29,1,0,0,0,159,165,3,32,16,0,160,165,
+3,34,17,0,161,165,3,38,19,0,162,165,3,40,20,0,163,165,3,46,23,0,164,159,
+1,0,0,0,164,160,1,0,0,0,164,161,1,0,0,0,164,162,1,0,0,0,164,163,1,0,0,0,
+165,31,1,0,0,0,166,167,5,15,0,0,167,168,5,24,0,0,168,169,3,54,27,0,169,170,
+5,17,0,0,170,33,1,0,0,0,171,172,5,6,0,0,172,173,5,20,0,0,173,174,3,54,27,
+0,174,175,5,21,0,0,175,176,3,26,13,0,176,177,3,36,18,0,177,178,5,17,0,0,
+178,35,1,0,0,0,179,180,5,7,0,0,180,183,3,26,13,0,181,183,1,0,0,0,182,179,
+1,0,0,0,182,181,1,0,0,0,183,37,1,0,0,0,184,185,5,8,0,0,185,186,5,20,0,0,
+186,187,3,54,27,0,187,188,5,21,0,0,188,189,5,9,0,0,189,190,3,26,13,0,190,
+191,5,17,0,0,191,39,1,0,0,0,192,193,5,15,0,0,193,194,5,20,0,0,194,195,3,
+42,21,0,195,196,5,21,0,0,196,197,5,17,0,0,197,41,1,0,0,0,198,199,3,54,27,
+0,199,200,3,44,22,0,200,203,1,0,0,0,201,203,1,0,0,0,202,198,1,0,0,0,202,
+201,1,0,0,0,203,43,1,0,0,0,204,205,5,19,0,0,205,206,3,54,27,0,206,207,3,
+44,22,0,207,210,1,0,0,0,208,210,1,0,0,0,209,204,1,0,0,0,209,208,1,0,0,0,
+210,45,1,0,0,0,211,212,5,14,0,0,212,213,5,20,0,0,213,214,3,48,24,0,214,215,
+5,21,0,0,215,216,5,17,0,0,216,47,1,0,0,0,217,218,3,52,26,0,218,219,3,50,
+25,0,219,222,1,0,0,0,220,222,1,0,0,0,221,217,1,0,0,0,221,220,1,0,0,0,222,
+49,1,0,0,0,223,224,5,19,0,0,224,225,3,52,26,0,225,226,3,50,25,0,226,229,
+1,0,0,0,227,229,1,0,0,0,228,223,1,0,0,0,228,227,1,0,0,0,229,51,1,0,0,0,230,
+233,3,54,27,0,231,233,5,16,0,0,232,230,1,0,0,0,232,231,1,0,0,0,233,53,1,
+0,0,0,234,235,3,58,29,0,235,236,3,56,28,0,236,239,1,0,0,0,237,239,3,58,29,
+0,238,234,1,0,0,0,238,237,1,0,0,0,239,55,1,0,0,0,240,241,5,26,0,0,241,249,
+3,58,29,0,242,243,5,25,0,0,243,249,3,58,29,0,244,245,5,28,0,0,245,249,3,
+58,29,0,246,247,5,27,0,0,247,249,3,58,29,0,248,240,1,0,0,0,248,242,1,0,0,
+0,248,244,1,0,0,0,248,246,1,0,0,0,249,57,1,0,0,0,250,251,3,62,31,0,251,252,
+3,60,30,0,252,59,1,0,0,0,253,254,5,29,0,0,254,259,3,58,29,0,255,256,5,30,
+0,0,256,259,3,58,29,0,257,259,1,0,0,0,258,253,1,0,0,0,258,255,1,0,0,0,258,
+257,1,0,0,0,259,61,1,0,0,0,260,261,3,66,33,0,261,262,3,64,32,0,262,63,1,
+0,0,0,263,264,5,31,0,0,264,269,3,66,33,0,265,266,5,32,0,0,266,269,3,66,33,
+0,267,269,1,0,0,0,268,263,1,0,0,0,268,265,1,0,0,0,268,267,1,0,0,0,269,65,
+1,0,0,0,270,271,5,20,0,0,271,272,3,54,27,0,272,273,5,21,0,0,273,278,1,0,
+0,0,274,275,3,68,34,0,275,276,3,70,35,0,276,278,1,0,0,0,277,270,1,0,0,0,
+277,274,1,0,0,0,278,67,1,0,0,0,279,283,5,29,0,0,280,283,5,30,0,0,281,283,
+1,0,0,0,282,279,1,0,0,0,282,280,1,0,0,0,282,281,1,0,0,0,283,69,1,0,0,0,284,
+287,5,15,0,0,285,287,3,72,36,0,286,284,1,0,0,0,286,285,1,0,0,0,287,71,1,
+0,0,0,288,289,7,1,0,0,289,73,1,0,0,0,21,86,94,109,115,133,140,157,164,182,
+202,209,221,228,232,238,248,258,268,277,282,286];
 
 
 const atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -138,20 +139,26 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    try {
 	        this.enterOuterAlt(localctx, 1);
 	        this.state = 74;
-	        this.match(PatitoParserParser.PROGRAM);
+	        localctx._PROGRAM = this.match(PatitoParserParser.PROGRAM);
 	        this.state = 75;
-	        this.match(PatitoParserParser.ID);
-	        this.state = 76;
-	        this.match(PatitoParserParser.SEMICOLON);
+	        localctx._ID = this.match(PatitoParserParser.ID);
+	         
+	        		// Sematic action #2
+	        		this.currType = (localctx._PROGRAM == null ? null : localctx._PROGRAM.text);
+	        		this.currFunc = (localctx._ID == null ? null : localctx._ID.text);
+	        		this.FunctionDir.addFunction(this.currFunc, this.currType);
+	        	
 	        this.state = 77;
-	        this.tiene_vars();
+	        this.match(PatitoParserParser.SEMICOLON);
 	        this.state = 78;
-	        this.lista_funcs();
+	        this.tiene_vars();
 	        this.state = 79;
-	        this.match(PatitoParserParser.INICIO);
+	        this.lista_funcs();
 	        this.state = 80;
-	        this.cuerpo();
+	        this.match(PatitoParserParser.INICIO);
 	        this.state = 81;
+	        this.cuerpo();
+	        this.state = 82;
 	        this.match(PatitoParserParser.FIN);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -173,12 +180,12 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    let localctx = new Tiene_varsContext(this, this._ctx, this.state);
 	    this.enterRule(localctx, 2, PatitoParserParser.RULE_tiene_vars);
 	    try {
-	        this.state = 85;
+	        this.state = 86;
 	        this._errHandler.sync(this);
 	        switch(this._input.LA(1)) {
 	        case 2:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 83;
+	            this.state = 84;
 	            this.vars();
 	            break;
 	        case 5:
@@ -211,11 +218,11 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    this.enterRule(localctx, 4, PatitoParserParser.RULE_vars);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 87;
-	        this.match(PatitoParserParser.VARS);
 	        this.state = 88;
-	        this.lista_vars();
+	        this.match(PatitoParserParser.VARS);
 	        this.state = 89;
+	        this.lista_vars();
+	        this.state = 90;
 	        this.mas_vars();
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -237,12 +244,12 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    let localctx = new Mas_varsContext(this, this._ctx, this.state);
 	    this.enterRule(localctx, 6, PatitoParserParser.RULE_mas_vars);
 	    try {
-	        this.state = 93;
+	        this.state = 94;
 	        this._errHandler.sync(this);
 	        switch(this._input.LA(1)) {
 	        case 15:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 91;
+	            this.state = 92;
 	            this.lista_vars();
 	            break;
 	        case 5:
@@ -275,13 +282,23 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    this.enterRule(localctx, 8, PatitoParserParser.RULE_lista_vars);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 95;
-	        this.lista_ids();
 	        this.state = 96;
-	        this.match(PatitoParserParser.COLON);
+	        localctx._lista_ids = this.lista_ids();
 	        this.state = 97;
-	        this.tipo();
+	        this.match(PatitoParserParser.COLON);
 	        this.state = 98;
+	        localctx._tipo = this.tipo();
+
+	        		console.log("Current Func: ", this.currFunc);
+	        		console.log("Vars: ", (localctx._lista_ids == null ? null : this._input.getText(new antlr4.Interval(localctx._lista_ids.start,localctx._lista_ids.stop))), " Type: ", (localctx._tipo == null ? null : this._input.getText(new antlr4.Interval(localctx._tipo.start,localctx._tipo.stop))));
+	        		this.currType = (localctx._tipo == null ? null : this._input.getText(new antlr4.Interval(localctx._tipo.start,localctx._tipo.stop)));
+	        		let var_list = (localctx._lista_ids == null ? null : this._input.getText(new antlr4.Interval(localctx._lista_ids.start,localctx._lista_ids.stop)));
+	        		let var_list_array = var_list.split(",");
+	        		var_list_array.forEach((_var) => {
+	        			this.FunctionDir.functions[this.currFunc].variables.addVar(_var, this.currType)
+	        		});
+	        	
+	        this.state = 100;
 	        this.match(PatitoParserParser.SEMICOLON);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -304,9 +321,9 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    this.enterRule(localctx, 10, PatitoParserParser.RULE_lista_ids);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 100;
+	        this.state = 102;
 	        this.match(PatitoParserParser.ID);
-	        this.state = 101;
+	        this.state = 103;
 	        this.mas_ids();
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -328,16 +345,16 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    let localctx = new Mas_idsContext(this, this._ctx, this.state);
 	    this.enterRule(localctx, 12, PatitoParserParser.RULE_mas_ids);
 	    try {
-	        this.state = 107;
+	        this.state = 109;
 	        this._errHandler.sync(this);
 	        switch(this._input.LA(1)) {
 	        case 19:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 103;
-	            this.match(PatitoParserParser.COMMA);
-	            this.state = 104;
-	            this.match(PatitoParserParser.ID);
 	            this.state = 105;
+	            this.match(PatitoParserParser.COMMA);
+	            this.state = 106;
+	            this.match(PatitoParserParser.ID);
+	            this.state = 107;
 	            this.mas_ids();
 	            break;
 	        case 18:
@@ -367,14 +384,14 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    let localctx = new Lista_funcsContext(this, this._ctx, this.state);
 	    this.enterRule(localctx, 14, PatitoParserParser.RULE_lista_funcs);
 	    try {
-	        this.state = 113;
+	        this.state = 115;
 	        this._errHandler.sync(this);
 	        switch(this._input.LA(1)) {
 	        case 5:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 109;
+	            this.state = 111;
 	            this.funcs();
-	            this.state = 110;
+	            this.state = 112;
 	            this.lista_funcs();
 	            break;
 	        case 10:
@@ -405,25 +422,35 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    this.enterRule(localctx, 16, PatitoParserParser.RULE_funcs);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 115;
-	        this.match(PatitoParserParser.NULA);
-	        this.state = 116;
-	        this.match(PatitoParserParser.ID);
 	        this.state = 117;
-	        this.match(PatitoParserParser.LPAR);
+	        localctx._NULA = this.match(PatitoParserParser.NULA);
 	        this.state = 118;
-	        this.lista_params();
-	        this.state = 119;
-	        this.match(PatitoParserParser.RPAR);
+	        localctx._ID = this.match(PatitoParserParser.ID);
+
+	        		this.currType = (localctx._NULA == null ? null : localctx._NULA.text);
+	        		this.currFunc = (localctx._ID == null ? null : localctx._ID.text);
+
+	        		if(this.FunctionDir.hasFunction(this.currFunc)){
+	        			console.error(`La función ${this.currFunc} ya está definida`);
+	        		}
+
+	        		this.FunctionDir.addFunction(this.currFunc, this.currType);
+	        	
 	        this.state = 120;
-	        this.match(PatitoParserParser.LBRACE);
+	        this.match(PatitoParserParser.LPAR);
 	        this.state = 121;
-	        this.tiene_vars();
+	        this.lista_params();
 	        this.state = 122;
-	        this.cuerpo();
+	        this.match(PatitoParserParser.RPAR);
 	        this.state = 123;
-	        this.match(PatitoParserParser.RBRACE);
+	        this.match(PatitoParserParser.LBRACE);
 	        this.state = 124;
+	        this.tiene_vars();
+	        this.state = 125;
+	        this.cuerpo();
+	        this.state = 126;
+	        this.match(PatitoParserParser.RBRACE);
+	        this.state = 127;
 	        this.match(PatitoParserParser.SEMICOLON);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -445,14 +472,14 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    let localctx = new Lista_paramsContext(this, this._ctx, this.state);
 	    this.enterRule(localctx, 18, PatitoParserParser.RULE_lista_params);
 	    try {
-	        this.state = 130;
+	        this.state = 133;
 	        this._errHandler.sync(this);
 	        switch(this._input.LA(1)) {
 	        case 15:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 126;
+	            this.state = 129;
 	            this.param();
-	            this.state = 127;
+	            this.state = 130;
 	            this.mas_params();
 	            break;
 	        case 21:
@@ -482,16 +509,16 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    let localctx = new Mas_paramsContext(this, this._ctx, this.state);
 	    this.enterRule(localctx, 20, PatitoParserParser.RULE_mas_params);
 	    try {
-	        this.state = 137;
+	        this.state = 140;
 	        this._errHandler.sync(this);
 	        switch(this._input.LA(1)) {
 	        case 19:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 132;
+	            this.state = 135;
 	            this.match(PatitoParserParser.COMMA);
-	            this.state = 133;
+	            this.state = 136;
 	            this.param();
-	            this.state = 134;
+	            this.state = 137;
 	            this.mas_params();
 	            break;
 	        case 21:
@@ -522,12 +549,24 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    this.enterRule(localctx, 22, PatitoParserParser.RULE_param);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 139;
-	        this.match(PatitoParserParser.ID);
-	        this.state = 140;
+	        this.state = 142;
+	        localctx._ID = this.match(PatitoParserParser.ID);
+	        this.state = 143;
 	        this.match(PatitoParserParser.COLON);
-	        this.state = 141;
-	        this.tipo();
+	        this.state = 144;
+	        localctx._tipo = this.tipo();
+	         
+	        		this.currType = (localctx._tipo == null ? null : this._input.getText(new antlr4.Interval(localctx._tipo.start,localctx._tipo.stop)));
+	        		this.currVar = (localctx._ID == null ? null : localctx._ID.text);
+	        		console.log("Current Func: ", this.currFunc);
+	        		console.log("Current Param: ", this.currVar, " Type: ", (localctx._tipo == null ? null : this._input.getText(new antlr4.Interval(localctx._tipo.start,localctx._tipo.stop))));
+	        		if(this.FunctionDir.functions[this.currFunc].variables.hasVariable(this.currVar)){
+	        			console.error(`La función ${this.currVar} ya está definida`);
+	        		}
+	        		else {
+	        			this.FunctionDir.functions[this.currFunc].variables.addVar(this.currVar, this.currType)
+	        		}
+	        	
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
 		        localctx.exception = re;
@@ -550,7 +589,7 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    var _la = 0;
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 143;
+	        this.state = 147;
 	        _la = this._input.LA(1);
 	        if(!(_la===3 || _la===4)) {
 	        this._errHandler.recoverInline(this);
@@ -580,11 +619,11 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    this.enterRule(localctx, 26, PatitoParserParser.RULE_cuerpo);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 145;
+	        this.state = 149;
 	        this.match(PatitoParserParser.LBRACE);
-	        this.state = 146;
+	        this.state = 150;
 	        this.lista_estatutos();
-	        this.state = 147;
+	        this.state = 151;
 	        this.match(PatitoParserParser.RBRACE);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -606,7 +645,7 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    let localctx = new Lista_estatutosContext(this, this._ctx, this.state);
 	    this.enterRule(localctx, 28, PatitoParserParser.RULE_lista_estatutos);
 	    try {
-	        this.state = 153;
+	        this.state = 157;
 	        this._errHandler.sync(this);
 	        switch(this._input.LA(1)) {
 	        case 6:
@@ -614,9 +653,9 @@ export default class PatitoParserParser extends antlr4.Parser {
 	        case 14:
 	        case 15:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 149;
+	            this.state = 153;
 	            this.estatuto();
-	            this.state = 150;
+	            this.state = 154;
 	            this.lista_estatutos();
 	            break;
 	        case 23:
@@ -646,37 +685,37 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    let localctx = new EstatutoContext(this, this._ctx, this.state);
 	    this.enterRule(localctx, 30, PatitoParserParser.RULE_estatuto);
 	    try {
-	        this.state = 160;
+	        this.state = 164;
 	        this._errHandler.sync(this);
 	        var la_ = this._interp.adaptivePredict(this._input,7,this._ctx);
 	        switch(la_) {
 	        case 1:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 155;
+	            this.state = 159;
 	            this.asigna();
 	            break;
 
 	        case 2:
 	            this.enterOuterAlt(localctx, 2);
-	            this.state = 156;
+	            this.state = 160;
 	            this.condicion();
 	            break;
 
 	        case 3:
 	            this.enterOuterAlt(localctx, 3);
-	            this.state = 157;
+	            this.state = 161;
 	            this.ciclo();
 	            break;
 
 	        case 4:
 	            this.enterOuterAlt(localctx, 4);
-	            this.state = 158;
+	            this.state = 162;
 	            this.llamada();
 	            break;
 
 	        case 5:
 	            this.enterOuterAlt(localctx, 5);
-	            this.state = 159;
+	            this.state = 163;
 	            this.imprime();
 	            break;
 
@@ -702,13 +741,13 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    this.enterRule(localctx, 32, PatitoParserParser.RULE_asigna);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 162;
+	        this.state = 166;
 	        this.match(PatitoParserParser.ID);
-	        this.state = 163;
+	        this.state = 167;
 	        this.match(PatitoParserParser.ASSIGN);
-	        this.state = 164;
+	        this.state = 168;
 	        this.expresion();
-	        this.state = 165;
+	        this.state = 169;
 	        this.match(PatitoParserParser.SEMICOLON);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -731,19 +770,19 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    this.enterRule(localctx, 34, PatitoParserParser.RULE_condicion);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 167;
-	        this.match(PatitoParserParser.SI);
-	        this.state = 168;
-	        this.match(PatitoParserParser.LPAR);
-	        this.state = 169;
-	        this.expresion();
-	        this.state = 170;
-	        this.match(PatitoParserParser.RPAR);
 	        this.state = 171;
-	        this.cuerpo();
+	        this.match(PatitoParserParser.SI);
 	        this.state = 172;
-	        this.tiene_sino();
+	        this.match(PatitoParserParser.LPAR);
 	        this.state = 173;
+	        this.expresion();
+	        this.state = 174;
+	        this.match(PatitoParserParser.RPAR);
+	        this.state = 175;
+	        this.cuerpo();
+	        this.state = 176;
+	        this.tiene_sino();
+	        this.state = 177;
 	        this.match(PatitoParserParser.SEMICOLON);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -765,14 +804,14 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    let localctx = new Tiene_sinoContext(this, this._ctx, this.state);
 	    this.enterRule(localctx, 36, PatitoParserParser.RULE_tiene_sino);
 	    try {
-	        this.state = 178;
+	        this.state = 182;
 	        this._errHandler.sync(this);
 	        switch(this._input.LA(1)) {
 	        case 7:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 175;
+	            this.state = 179;
 	            this.match(PatitoParserParser.SINO);
-	            this.state = 176;
+	            this.state = 180;
 	            this.cuerpo();
 	            break;
 	        case 17:
@@ -803,19 +842,19 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    this.enterRule(localctx, 38, PatitoParserParser.RULE_ciclo);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 180;
-	        this.match(PatitoParserParser.MIENTRAS);
-	        this.state = 181;
-	        this.match(PatitoParserParser.LPAR);
-	        this.state = 182;
-	        this.expresion();
-	        this.state = 183;
-	        this.match(PatitoParserParser.RPAR);
 	        this.state = 184;
-	        this.match(PatitoParserParser.HAZ);
+	        this.match(PatitoParserParser.MIENTRAS);
 	        this.state = 185;
-	        this.cuerpo();
+	        this.match(PatitoParserParser.LPAR);
 	        this.state = 186;
+	        this.expresion();
+	        this.state = 187;
+	        this.match(PatitoParserParser.RPAR);
+	        this.state = 188;
+	        this.match(PatitoParserParser.HAZ);
+	        this.state = 189;
+	        this.cuerpo();
+	        this.state = 190;
 	        this.match(PatitoParserParser.SEMICOLON);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -838,15 +877,15 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    this.enterRule(localctx, 40, PatitoParserParser.RULE_llamada);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 188;
-	        this.match(PatitoParserParser.ID);
-	        this.state = 189;
-	        this.match(PatitoParserParser.LPAR);
-	        this.state = 190;
-	        this.lista_expresiones();
-	        this.state = 191;
-	        this.match(PatitoParserParser.RPAR);
 	        this.state = 192;
+	        this.match(PatitoParserParser.ID);
+	        this.state = 193;
+	        this.match(PatitoParserParser.LPAR);
+	        this.state = 194;
+	        this.lista_expresiones();
+	        this.state = 195;
+	        this.match(PatitoParserParser.RPAR);
+	        this.state = 196;
 	        this.match(PatitoParserParser.SEMICOLON);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -868,7 +907,7 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    let localctx = new Lista_expresionesContext(this, this._ctx, this.state);
 	    this.enterRule(localctx, 42, PatitoParserParser.RULE_lista_expresiones);
 	    try {
-	        this.state = 198;
+	        this.state = 202;
 	        this._errHandler.sync(this);
 	        switch(this._input.LA(1)) {
 	        case 12:
@@ -878,9 +917,9 @@ export default class PatitoParserParser extends antlr4.Parser {
 	        case 29:
 	        case 30:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 194;
+	            this.state = 198;
 	            this.expresion();
-	            this.state = 195;
+	            this.state = 199;
 	            this.mas_expresiones();
 	            break;
 	        case 21:
@@ -910,16 +949,16 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    let localctx = new Mas_expresionesContext(this, this._ctx, this.state);
 	    this.enterRule(localctx, 44, PatitoParserParser.RULE_mas_expresiones);
 	    try {
-	        this.state = 205;
+	        this.state = 209;
 	        this._errHandler.sync(this);
 	        switch(this._input.LA(1)) {
 	        case 19:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 200;
+	            this.state = 204;
 	            this.match(PatitoParserParser.COMMA);
-	            this.state = 201;
+	            this.state = 205;
 	            this.expresion();
-	            this.state = 202;
+	            this.state = 206;
 	            this.mas_expresiones();
 	            break;
 	        case 21:
@@ -950,15 +989,15 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    this.enterRule(localctx, 46, PatitoParserParser.RULE_imprime);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 207;
-	        this.match(PatitoParserParser.ESCRIBE);
-	        this.state = 208;
-	        this.match(PatitoParserParser.LPAR);
-	        this.state = 209;
-	        this.lista_impresiones();
-	        this.state = 210;
-	        this.match(PatitoParserParser.RPAR);
 	        this.state = 211;
+	        this.match(PatitoParserParser.ESCRIBE);
+	        this.state = 212;
+	        this.match(PatitoParserParser.LPAR);
+	        this.state = 213;
+	        this.lista_impresiones();
+	        this.state = 214;
+	        this.match(PatitoParserParser.RPAR);
+	        this.state = 215;
 	        this.match(PatitoParserParser.SEMICOLON);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -980,7 +1019,7 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    let localctx = new Lista_impresionesContext(this, this._ctx, this.state);
 	    this.enterRule(localctx, 48, PatitoParserParser.RULE_lista_impresiones);
 	    try {
-	        this.state = 217;
+	        this.state = 221;
 	        this._errHandler.sync(this);
 	        switch(this._input.LA(1)) {
 	        case 12:
@@ -991,9 +1030,9 @@ export default class PatitoParserParser extends antlr4.Parser {
 	        case 29:
 	        case 30:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 213;
+	            this.state = 217;
 	            this.imprimibles();
-	            this.state = 214;
+	            this.state = 218;
 	            this.mas_impresiones();
 	            break;
 	        case 21:
@@ -1023,16 +1062,16 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    let localctx = new Mas_impresionesContext(this, this._ctx, this.state);
 	    this.enterRule(localctx, 50, PatitoParserParser.RULE_mas_impresiones);
 	    try {
-	        this.state = 224;
+	        this.state = 228;
 	        this._errHandler.sync(this);
 	        switch(this._input.LA(1)) {
 	        case 19:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 219;
+	            this.state = 223;
 	            this.match(PatitoParserParser.COMMA);
-	            this.state = 220;
+	            this.state = 224;
 	            this.imprimibles();
-	            this.state = 221;
+	            this.state = 225;
 	            this.mas_impresiones();
 	            break;
 	        case 21:
@@ -1062,7 +1101,7 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    let localctx = new ImprimiblesContext(this, this._ctx, this.state);
 	    this.enterRule(localctx, 52, PatitoParserParser.RULE_imprimibles);
 	    try {
-	        this.state = 228;
+	        this.state = 232;
 	        this._errHandler.sync(this);
 	        switch(this._input.LA(1)) {
 	        case 12:
@@ -1072,12 +1111,12 @@ export default class PatitoParserParser extends antlr4.Parser {
 	        case 29:
 	        case 30:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 226;
+	            this.state = 230;
 	            this.expresion();
 	            break;
 	        case 16:
 	            this.enterOuterAlt(localctx, 2);
-	            this.state = 227;
+	            this.state = 231;
 	            this.match(PatitoParserParser.LETRERO);
 	            break;
 	        default:
@@ -1103,21 +1142,21 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    let localctx = new ExpresionContext(this, this._ctx, this.state);
 	    this.enterRule(localctx, 54, PatitoParserParser.RULE_expresion);
 	    try {
-	        this.state = 234;
+	        this.state = 238;
 	        this._errHandler.sync(this);
 	        var la_ = this._interp.adaptivePredict(this._input,14,this._ctx);
 	        switch(la_) {
 	        case 1:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 230;
+	            this.state = 234;
 	            this.exp();
-	            this.state = 231;
+	            this.state = 235;
 	            this.comparador();
 	            break;
 
 	        case 2:
 	            this.enterOuterAlt(localctx, 2);
-	            this.state = 233;
+	            this.state = 237;
 	            this.exp();
 	            break;
 
@@ -1142,35 +1181,35 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    let localctx = new ComparadorContext(this, this._ctx, this.state);
 	    this.enterRule(localctx, 56, PatitoParserParser.RULE_comparador);
 	    try {
-	        this.state = 244;
+	        this.state = 248;
 	        this._errHandler.sync(this);
 	        switch(this._input.LA(1)) {
 	        case 26:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 236;
+	            this.state = 240;
 	            this.match(PatitoParserParser.LT);
-	            this.state = 237;
+	            this.state = 241;
 	            this.exp();
 	            break;
 	        case 25:
 	            this.enterOuterAlt(localctx, 2);
-	            this.state = 238;
+	            this.state = 242;
 	            this.match(PatitoParserParser.GT);
-	            this.state = 239;
+	            this.state = 243;
 	            this.exp();
 	            break;
 	        case 28:
 	            this.enterOuterAlt(localctx, 3);
-	            this.state = 240;
+	            this.state = 244;
 	            this.match(PatitoParserParser.EQ);
-	            this.state = 241;
+	            this.state = 245;
 	            this.exp();
 	            break;
 	        case 27:
 	            this.enterOuterAlt(localctx, 4);
-	            this.state = 242;
+	            this.state = 246;
 	            this.match(PatitoParserParser.NEQ);
-	            this.state = 243;
+	            this.state = 247;
 	            this.exp();
 	            break;
 	        default:
@@ -1197,9 +1236,9 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    this.enterRule(localctx, 58, PatitoParserParser.RULE_exp);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 246;
+	        this.state = 250;
 	        this.termino();
-	        this.state = 247;
+	        this.state = 251;
 	        this.operaciones_signo();
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -1221,21 +1260,21 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    let localctx = new Operaciones_signoContext(this, this._ctx, this.state);
 	    this.enterRule(localctx, 60, PatitoParserParser.RULE_operaciones_signo);
 	    try {
-	        this.state = 254;
+	        this.state = 258;
 	        this._errHandler.sync(this);
 	        switch(this._input.LA(1)) {
 	        case 29:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 249;
+	            this.state = 253;
 	            this.match(PatitoParserParser.PLUS);
-	            this.state = 250;
+	            this.state = 254;
 	            this.exp();
 	            break;
 	        case 30:
 	            this.enterOuterAlt(localctx, 2);
-	            this.state = 251;
+	            this.state = 255;
 	            this.match(PatitoParserParser.MINUS);
-	            this.state = 252;
+	            this.state = 256;
 	            this.exp();
 	            break;
 	        case 17:
@@ -1272,9 +1311,9 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    this.enterRule(localctx, 62, PatitoParserParser.RULE_termino);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 256;
+	        this.state = 260;
 	        this.factor();
-	        this.state = 257;
+	        this.state = 261;
 	        this.operaciones_factor();
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -1296,21 +1335,21 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    let localctx = new Operaciones_factorContext(this, this._ctx, this.state);
 	    this.enterRule(localctx, 64, PatitoParserParser.RULE_operaciones_factor);
 	    try {
-	        this.state = 264;
+	        this.state = 268;
 	        this._errHandler.sync(this);
 	        switch(this._input.LA(1)) {
 	        case 31:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 259;
+	            this.state = 263;
 	            this.match(PatitoParserParser.MULT);
-	            this.state = 260;
+	            this.state = 264;
 	            this.factor();
 	            break;
 	        case 32:
 	            this.enterOuterAlt(localctx, 2);
-	            this.state = 261;
+	            this.state = 265;
 	            this.match(PatitoParserParser.DIV);
-	            this.state = 262;
+	            this.state = 266;
 	            this.factor();
 	            break;
 	        case 17:
@@ -1348,16 +1387,16 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    let localctx = new FactorContext(this, this._ctx, this.state);
 	    this.enterRule(localctx, 66, PatitoParserParser.RULE_factor);
 	    try {
-	        this.state = 273;
+	        this.state = 277;
 	        this._errHandler.sync(this);
 	        switch(this._input.LA(1)) {
 	        case 20:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 266;
+	            this.state = 270;
 	            this.match(PatitoParserParser.LPAR);
-	            this.state = 267;
+	            this.state = 271;
 	            this.expresion();
-	            this.state = 268;
+	            this.state = 272;
 	            this.match(PatitoParserParser.RPAR);
 	            break;
 	        case 12:
@@ -1366,9 +1405,9 @@ export default class PatitoParserParser extends antlr4.Parser {
 	        case 29:
 	        case 30:
 	            this.enterOuterAlt(localctx, 2);
-	            this.state = 270;
+	            this.state = 274;
 	            this.operadores_signo();
-	            this.state = 271;
+	            this.state = 275;
 	            this.operandos_factor();
 	            break;
 	        default:
@@ -1394,17 +1433,17 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    let localctx = new Operadores_signoContext(this, this._ctx, this.state);
 	    this.enterRule(localctx, 68, PatitoParserParser.RULE_operadores_signo);
 	    try {
-	        this.state = 278;
+	        this.state = 282;
 	        this._errHandler.sync(this);
 	        switch(this._input.LA(1)) {
 	        case 29:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 275;
+	            this.state = 279;
 	            this.match(PatitoParserParser.PLUS);
 	            break;
 	        case 30:
 	            this.enterOuterAlt(localctx, 2);
-	            this.state = 276;
+	            this.state = 280;
 	            this.match(PatitoParserParser.MINUS);
 	            break;
 	        case 12:
@@ -1436,18 +1475,18 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    let localctx = new Operandos_factorContext(this, this._ctx, this.state);
 	    this.enterRule(localctx, 70, PatitoParserParser.RULE_operandos_factor);
 	    try {
-	        this.state = 282;
+	        this.state = 286;
 	        this._errHandler.sync(this);
 	        switch(this._input.LA(1)) {
 	        case 15:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 280;
+	            this.state = 284;
 	            this.match(PatitoParserParser.ID);
 	            break;
 	        case 12:
 	        case 13:
 	            this.enterOuterAlt(localctx, 2);
-	            this.state = 281;
+	            this.state = 285;
 	            this.cte();
 	            break;
 	        default:
@@ -1475,7 +1514,7 @@ export default class PatitoParserParser extends antlr4.Parser {
 	    var _la = 0;
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 284;
+	        this.state = 288;
 	        _la = this._input.LA(1);
 	        if(!(_la===12 || _la===13)) {
 	        this._errHandler.recoverInline(this);
@@ -1586,6 +1625,8 @@ class ProgramaContext extends antlr4.ParserRuleContext {
         super(parent, invokingState);
         this.parser = parser;
         this.ruleIndex = PatitoParserParser.RULE_programa;
+        this._PROGRAM = null;
+        this._ID = null;
     }
 
 	PROGRAM() {
@@ -1762,6 +1803,8 @@ class Lista_varsContext extends antlr4.ParserRuleContext {
         super(parent, invokingState);
         this.parser = parser;
         this.ruleIndex = PatitoParserParser.RULE_lista_vars;
+        this._lista_ids = null;
+        this._tipo = null;
     }
 
 	lista_ids() {
@@ -1930,6 +1973,8 @@ class FuncsContext extends antlr4.ParserRuleContext {
         super(parent, invokingState);
         this.parser = parser;
         this.ruleIndex = PatitoParserParser.RULE_funcs;
+        this._NULA = null;
+        this._ID = null;
     }
 
 	NULA() {
@@ -2083,6 +2128,8 @@ class ParamContext extends antlr4.ParserRuleContext {
         super(parent, invokingState);
         this.parser = parser;
         this.ruleIndex = PatitoParserParser.RULE_param;
+        this._ID = null;
+        this._tipo = null;
     }
 
 	ID() {

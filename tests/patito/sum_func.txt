@@ -1,0 +1,17 @@
+programa test1;
+
+vars x, y, z: entero;
+
+nula suma(a: entero, b: entero)
+{
+    vars c: flotante;
+    {
+        c = a + b;
+    }
+};
+
+inicio
+{
+    suma(1, 2);
+}
+fin

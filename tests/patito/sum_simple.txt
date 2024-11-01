@@ -1,0 +1,11 @@
+programa test1;
+
+vars x, y, z: entero;
+
+inicio
+{
+    x = 1;
+    y = 2;
+    z = x + y;
+}
+fin
