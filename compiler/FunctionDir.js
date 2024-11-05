@@ -4,7 +4,6 @@ export class FunctionDir {
     }
 
     getFunctions() {
-        console.log(this.functions)
         for (const _function in this.functions) {
             if (this.functions.hasOwnProperty(_function)) {
                 const element = this.functions[_function];
@@ -41,7 +40,7 @@ export class VarTable {
 
     addVar(name, type) {
         if (this.variables[name]) {
-            console.error('This variablw already exists');
+            console.error('This variable already exists');
         }
 
         this.variables[name] = { name, type };

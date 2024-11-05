@@ -1,4 +1,4 @@
-import HashTable from "../../classes/hashtable";
+import { HashTable } from "../../classes/hashtable.js";
 
 describe('HashTable', () => {
     let hashtable;

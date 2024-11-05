@@ -1,92 +1,92 @@
 export const sematicCube = {
     '+': { // addition
-        'ent': {
-            'ent': 'ent',
-            'flot': 'flot',
+        'entero': {
+            'entero': 'entero',
+            'flotante': 'flotante',
         },
-        'flot': {
-            'ent': 'flot',
-            'flot': 'flot',
+        'flotante': {
+            'entero': 'flotante',
+            'flotante': 'flotante',
         },
     },
     '-': { // subtraction
-        'ent': {
-            'ent': 'ent',
-            'flot': 'flot',
+        'entero': {
+            'entero': 'entero',
+            'flotante': 'flotante',
         },
-        'flot': {
-            'ent': 'flot',
-            'flot': 'flot',
+        'flotante': {
+            'entero': 'flotante',
+            'flotante': 'flotante',
         },
     },
     '*': { // multiplication
-        'ent': {
-            'ent': 'ent',
-            'flot': 'flot',
+        'entero': {
+            'entero': 'entero',
+            'flotante': 'flotante',
         },
-        'flot': {
-            'ent': 'flot',
-            'flot': 'flot',
+        'flotante': {
+            'entero': 'flotante',
+            'flotante': 'flotante',
         },
     },
     '/': { // division
-        'ent': {
-            'ent': 'flot',
-            'flot': 'flot',
+        'entero': {
+            'entero': 'flotante',
+            'flotante': 'flotante',
         },
-        'flot': {
-            'ent': 'flot',
-            'flot': 'flot',
+        'flotante': {
+            'entero': 'flotante',
+            'flotante': 'flotante',
         },
     },
     '>': { // more than
-        'ent': {
-            'ent': 'ent',
-            'flot': 'ent',
+        'entero': {
+            'entero': 'entero',
+            'flotante': 'entero',
         },
-        'flot': {
-            'ent': 'ent',
-            'flot': 'ent',
+        'flotante': {
+            'entero': 'entero',
+            'flotante': 'entero',
         },
     },
     '<': { // less than
-        'ent': {
-            'ent': 'ent',
-            'flot': 'ent',
+        'entero': {
+            'entero': 'entero',
+            'flotante': 'entero',
         },
-        'flot': {
-            'ent': 'ent',
-            'flot': 'ent',
+        'flotante': {
+            'entero': 'entero',
+            'flotante': 'entero',
         },
     },
     '==': { // equals
-        'ent': {
-            'ent': 'ent',
-            'flot': 'ent',
+        'entero': {
+            'entero': 'entero',
+            'flotante': 'entero',
         },
-        'flot': {
-            'ent': 'ent',
-            'flot': 'ent',
+        'flotante': {
+            'entero': 'entero',
+            'flotante': 'entero',
         },
     },
     '!=': { // doesn't equal
-        'ent': {
-            'ent': 'ent',
-            'flot': 'ent',
+        'entero': {
+            'entero': 'entero',
+            'flotante': 'entero',
         },
-        'flot': {
-            'ent': 'ent',
-            'flot': 'ent',
+        'flotante': {
+            'entero': 'entero',
+            'flotante': 'entero',
         },
     },
     '=': { // assignation
-        'ent': {
-            'ent': 'ent',
-            'flot': 'ent',
+        'entero': {
+            'entero': 'entero',
+            'flotante': 'entero',
         },
-        'flot': {
-            'ent': 'flot',
-            'flot': 'flot',
+        'flotante': {
+            'entero': 'flotante',
+            'flotante': 'flotante',
         },
     },
 }

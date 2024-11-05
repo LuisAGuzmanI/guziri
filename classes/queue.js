@@ -1,4 +1,4 @@
-export default class Queue {
+export class Queue {
     constructor() {
         this.items = [];
     }
@@ -9,42 +9,40 @@ export default class Queue {
     }
 
     // Removes the first added element to the queue. Returns said element
-    pop(){
-        if(!this.isEmpty()) {
+    pop() {
+        if (!this.isEmpty()) {
             return this.items.shift();
+        } else {
+            return null;
         }
-
-        console.warn("Queue is empty");
-        return null;
     }
 
     // Returns the first added element to the queue
-    front(){
+    front() {
         if (!this.isEmpty()) {
             return this.items[0];
+        } else {
+            return null;
         }
-        
-        console.warn("Queue is empty");
-        return null;
     }
 
     // Returns the number of elements currently present on the queue
-    size(){
+    size() {
         return this.items.length;
     }
 
     // Returns true if there are 0 elements on the queue
-    isEmpty(){
+    isEmpty() {
         return this.size() == 0;
     }
 
     // Clears the queue of any elements. Returns an empy array
-    clear(){
+    clear() {
         this.items = [];
     }
 
     // Returns the items array value as a strings
-    toString(){
-        return this.items.toString();
+    toString() {
+        return JSON.stringify(this.items);
     }
 }

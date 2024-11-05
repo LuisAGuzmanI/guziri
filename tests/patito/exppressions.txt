@@ -1,0 +1,11 @@
+programa test1;
+
+vars 
+A, B, C: entero;
+D, E: flotante;
+
+inicio
+{
+    A = B + C * D < (C + D * B);
+}
+fin

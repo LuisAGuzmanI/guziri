@@ -1,4 +1,4 @@
-import Stack from"../../classes/stack";
+import { Stack } from "../../classes/stack.js";
 
 describe('Stack', () => {
     let stack;

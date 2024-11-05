@@ -1,4 +1,4 @@
-import Queue from"../../classes/queue";
+import { Queue } from "../../classes/queue.js";
 
 describe('Queue', () => {
     let queue;
