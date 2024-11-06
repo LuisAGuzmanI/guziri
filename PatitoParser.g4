@@ -94,7 +94,23 @@ sino:
 		this.JumpStack.push(this.QuadruplesQueue.size() - 1);
 	} cuerpo;
 
-ciclo: MIENTRAS LPAR expresion RPAR HAZ cuerpo SEMICOLON;
+ciclo:
+	MIENTRAS {
+		this.JumpStack.push(this.QuadruplesQueue.size());
+	} LPAR expresion RPAR {
+		const expResult = this.OperandStack.pop();
+		if(expResult.type != 'entero'){
+			console.error("Expected integer expression result on if statement")
+		} else {
+			this.QuadruplesQueue.addQuadruple('gotoF', expResult, null, undefined);
+			this.JumpStack.push(this.QuadruplesQueue.size() - 1);
+		}
+	} HAZ cuerpo SEMICOLON {
+		const end = this.JumpStack.pop();
+		const _return = this.JumpStack.pop();
+		this.QuadruplesQueue.addQuadruple('goto', null, null, _return);
+		this.QuadruplesQueue.fillJump(end);
+	};
 
 llamada: ID LPAR lista_expresiones RPAR SEMICOLON;
 lista_expresiones: expresion mas_expresiones |;
@@ -103,7 +119,13 @@ mas_expresiones: COMMA expresion mas_expresiones |;
 imprime: ESCRIBE LPAR lista_impresiones RPAR SEMICOLON;
 lista_impresiones: imprimibles mas_impresiones |;
 mas_impresiones: COMMA imprimibles mas_impresiones |;
-imprimibles: expresion | LETRERO;
+imprimibles:
+	expresion {
+		this.QuadruplesQueue.addQuadruple('imprime', null, null, this.OperandStack.pop());
+	}
+	| LETRERO {
+		this.QuadruplesQueue.addQuadruple('imprime', null, null, $LETRERO.text);
+	};
 
 expresion:
 	exp comparador {this.OperatorStack.push($comparador.text)} exp {

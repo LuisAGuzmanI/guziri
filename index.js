@@ -12,7 +12,7 @@ import { QuadruplesQueue } from './compiler/Queues.js';
 import { sematicCube } from './compiler/SematicCube.js';
 
 try {
-    const text = await readFile('./tests/patito/if_statements.txt', { encoding: 'utf8' });
+    const text = await readFile('./tests/patito/while_statement.txt', { encoding: 'utf8' });
 
     const chars = new antlr4.InputStream(text);
     const lexer = new PatitoLexer(chars);
@@ -40,7 +40,7 @@ try {
     parser.buildParseTrees = true;
     const tree = parser.programa();
 
-    // console.log(tree.toStringTree(parser.ruleNames));
+    console.log(tree.toStringTree(parser.ruleNames));
 
     // Entrega 2
     console.log("---Entrega 2---");

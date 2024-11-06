@@ -1,21 +1,24 @@
 
 programa test1;
 
-vars  A, B, C, D, E, F, G, H, I, J, K: entero;
+vars  A, B, C, D, E, F, G, H, I: entero;
 
 inicio
 {
     si (A*B-C < D*E/(G+H)) {
-        H = J * K * B;
+        H = J * K*B;
         si (B < H) {
             B = H + J;
+            escribe(A + B * C, D - E);
         }
         sino {
             A = A + B;
-        };
+            escribe(B - D);
+        }
     }
     sino {
         A = D - C + B;
-    };
+        escribe("el resultado es:", A);
+    }
 }
 fin

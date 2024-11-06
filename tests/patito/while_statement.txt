@@ -1,0 +1,14 @@
+programa test1;
+
+vars 
+A: entero;
+
+inicio
+{
+    A = 0;
+    mientras (A < 4) haz {
+        escribe("Iteracion: ", A);
+        A = A + 1;
+    };
+}
+fin
