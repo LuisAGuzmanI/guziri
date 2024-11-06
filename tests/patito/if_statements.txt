@@ -1,0 +1,21 @@
+
+programa test1;
+
+vars  A, B, C, D, E, F, G, H, I, J, K: entero;
+
+inicio
+{
+    si (A*B-C < D*E/(G+H)) {
+        H = J * K * B;
+        si (B < H) {
+            B = H + J;
+        }
+        sino {
+            A = A + B;
+        };
+    }
+    sino {
+        A = D - C + B;
+    };
+}
+fin

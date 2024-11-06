@@ -167,12 +167,12 @@ export default class PatitoParserListener extends antlr4.tree.ParseTreeListener 
 	}
 
 
-	// Enter a parse tree produced by PatitoParserParser#tiene_sino.
-	enterTiene_sino(ctx) {
+	// Enter a parse tree produced by PatitoParserParser#sino.
+	enterSino(ctx) {
 	}
 
-	// Exit a parse tree produced by PatitoParserParser#tiene_sino.
-	exitTiene_sino(ctx) {
+	// Exit a parse tree produced by PatitoParserParser#sino.
+	exitSino(ctx) {
 	}
 
 

@@ -75,8 +75,24 @@ asigna:
 			}
 		} SEMICOLON;
 
-condicion: SI LPAR expresion RPAR cuerpo tiene_sino SEMICOLON;
-tiene_sino: SINO cuerpo |;
+condicion:
+	SI LPAR expresion RPAR {
+		const expResult = this.OperandStack.pop();
+		if(expResult.type != 'entero'){
+			console.error("Expected integer expression result on if statement")
+		} else {
+			this.QuadruplesQueue.addQuadruple('gotoF', expResult, null, undefined);
+			this.JumpStack.push(this.QuadruplesQueue.size() - 1);
+		}
+	} cuerpo sino* SEMICOLON {
+		this.QuadruplesQueue.fillJump(this.JumpStack.pop());
+	};
+sino:
+	SINO {
+		this.QuadruplesQueue.addQuadruple('goto', null, null, undefined);
+		this.QuadruplesQueue.fillJump(this.JumpStack.pop());
+		this.JumpStack.push(this.QuadruplesQueue.size() - 1);
+	} cuerpo;
 
 ciclo: MIENTRAS LPAR expresion RPAR HAZ cuerpo SEMICOLON;
 
@@ -158,7 +174,18 @@ factor:
 		} else {
 			this.currVar = $operandos_factor.text;
 		}
-		this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables.variables[this.currVar]);
+
+		const REGEX_ID = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
+		const REGEX_CTE_ENT = /^[0-9]+$/;
+		const REGEX_CTE_FLOT = /^[0-9]+\.[0-9]+$/;
+
+		if($operandos_factor.text.match(REGEX_ID)) {
+			this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables.variables[this.currVar]);
+		} else if($operandos_factor.text.match(REGEX_CTE_ENT)) {
+			this.OperandStack.push({ name: this.currVar, type: 'entero' });
+		} else if($operandos_factor.text.match(REGEX_CTE_FLOT)) {
+			this.OperandStack.push({ name: this.currVar, type: 'flotante' });
+		} 
 	};
 operadores_signo: PLUS | MINUS |;
 operandos_factor: ID | cte;

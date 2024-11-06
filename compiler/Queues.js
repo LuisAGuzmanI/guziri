@@ -21,6 +21,10 @@ export class QuadruplesQueue extends Queue {
         })
     }
 
+    fillJump(start) {
+        this.items[start]['result'] = this.size();
+    }
+
     showQuadruples() {
         console.table(this.items);
     }

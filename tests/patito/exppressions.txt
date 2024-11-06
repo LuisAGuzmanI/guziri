@@ -6,6 +6,11 @@ D, E: flotante;
 
 inicio
 {
-    A = B + C * D < (C + D * B);
+    si (A < B) {
+        A = 1;
+    } sino {
+        A = 2;
+    };
+    A = 6;
 }
 fin

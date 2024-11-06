@@ -12,7 +12,7 @@ import { QuadruplesQueue } from './compiler/Queues.js';
 import { sematicCube } from './compiler/SematicCube.js';
 
 try {
-    const text = await readFile('./tests/patito/exppressions.txt', { encoding: 'utf8' });
+    const text = await readFile('./tests/patito/if_statements.txt', { encoding: 'utf8' });
 
     const chars = new antlr4.InputStream(text);
     const lexer = new PatitoLexer(chars);
