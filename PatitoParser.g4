@@ -62,7 +62,18 @@ cuerpo: LBRACE lista_estatutos RBRACE;
 lista_estatutos: estatuto lista_estatutos |;
 estatuto: asigna | condicion | ciclo | llamada | imprime;
 
-asigna: ID ASSIGN expresion SEMICOLON;
+asigna:
+	ID {
+		this.currVar = $ID.text;
+		this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables.variables[this.currVar]);
+	} ASSIGN {this.OperatorStack.push($ASSIGN.text)} expresion {
+			if(this.OperatorStack.top() == '=' ){
+				let leftOperand = this.OperandStack.pop();
+				let resultVariable =  this.OperandStack.pop();
+				let operator = this.OperatorStack.pop();
+				this.QuadruplesQueue.addQuadruple(operator, leftOperand, null, resultVariable);
+			}
+		} SEMICOLON;
 
 condicion: SI LPAR expresion RPAR cuerpo tiene_sino SEMICOLON;
 tiene_sino: SINO cuerpo |;
@@ -79,8 +90,7 @@ mas_impresiones: COMMA imprimibles mas_impresiones |;
 imprimibles: expresion | LETRERO;
 
 expresion:
-	exp comparador {this.OperatorStack.push($comparador.text);} exp {
-		console.log('#9'); 
+	exp comparador {this.OperatorStack.push($comparador.text)} exp {
 		if(
 			this.OperatorStack.top() == '<' 
 			|| this.OperatorStack.top() == '>' 
@@ -91,65 +101,48 @@ expresion:
 			let rightOperand =  this.OperandStack.pop();
 			let leftOperand = this.OperandStack.pop();
 			let operator = this.OperatorStack.pop();
-			console.log(rightOperand, leftOperand, operator)
 			let resultType = this.SematicCube[operator][leftOperand.type][rightOperand.type];
-			console.log(resultType)
 			let resultVariable = this.QuadruplesQueue.newTempVariable(resultType);
 			this.OperandStack.push(resultVariable);
 			this.QuadruplesQueue.addQuadruple(operator, leftOperand, rightOperand, resultVariable);
 		}
-
-		console.log('Operand Stack: ', this.OperandStack.toString());
-		console.log('Operator Stack: ', this.OperatorStack.toString());
 	}
 	| exp;
 comparador: LT | GT | EQ | NEQ;
 
 exp:
 	termino {
-		console.log('#4'); 
 		if(this.OperatorStack.top() == '+' || this.OperatorStack.top() == '-'){
 			let rightOperand =  this.OperandStack.pop();
 			let leftOperand = this.OperandStack.pop();
 			let operator = this.OperatorStack.pop();
-			console.log(rightOperand, leftOperand, operator)
 			let resultType = this.SematicCube[operator][leftOperand.type][rightOperand.type];
-			console.log(resultType)
 			let resultVariable = this.QuadruplesQueue.newTempVariable(resultType);
 			this.OperandStack.push(resultVariable);
 			this.QuadruplesQueue.addQuadruple(operator, leftOperand, rightOperand, resultVariable);
 		}
-
-		console.log('Operand Stack: ', this.OperandStack.toString());
-		console.log('Operator Stack: ', this.OperatorStack.toString());
 	} operaciones_signo*;
 
 operaciones_signo:
-	PLUS {this.OperatorStack.push($PLUS.text); } exp
-	| MINUS {this.OperatorStack.push($MINUS.text); } exp;
+	PLUS {this.OperatorStack.push($PLUS.text)} exp
+	| MINUS {this.OperatorStack.push($MINUS.text)} exp;
 
 termino:
 	factor {
-		console.log('#5'); 
 		if(this.OperatorStack.top() == '*' || this.OperatorStack.top() == '/'){
 			let rightOperand =  this.OperandStack.pop();
 			let leftOperand = this.OperandStack.pop();
 			let operator = this.OperatorStack.pop();
-			console.log(rightOperand, leftOperand, operator)
 			let resultType = this.SematicCube[operator][leftOperand.type][rightOperand.type];
-			console.log(resultType)
 			let resultVariable = this.QuadruplesQueue.newTempVariable(resultType);
 			this.OperandStack.push(resultVariable);
 			this.QuadruplesQueue.addQuadruple(operator, leftOperand, rightOperand, resultVariable);
 		}
-
-		console.log('Operand Stack: ', this.OperandStack.toString());
-		console.log('Operator Stack: ', this.OperatorStack.toString());
 	} operaciones_factor*;
 
 operaciones_factor:
-	MULT {this.OperatorStack.push($MULT.text);} termino
-	| DIV {this.OperatorStack.push($DIV.text);} termino;
+	MULT {this.OperatorStack.push($MULT.text)} termino
+	| DIV {this.OperatorStack.push($DIV.text)} termino;
 
 factor:
 	LPAR {this.OperatorStack.push($LPAR.text);} expresion {
@@ -160,16 +153,12 @@ factor:
 			}
 		} RPAR
 	| operadores_signo operandos_factor {
-		console.log('#1');
 		if($operadores_signo.text == '-'){
 			this.currVar = '-' + $operandos_factor.text;
 		} else {
 			this.currVar = $operandos_factor.text;
 		}
 		this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables.variables[this.currVar]);
-
-		console.log('Operand Stack: ', this.OperandStack.toString());
-		console.log('Operator Stack: ', this.OperatorStack.toString());
 	};
 operadores_signo: PLUS | MINUS |;
 operandos_factor: ID | cte;
