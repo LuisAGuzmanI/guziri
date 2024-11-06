@@ -17,7 +17,8 @@ This project is an implementation of a compiler for a simple C-based programming
     * Test cases for different test programs
 * `index.js`
     Root file of the repository, currently not in use.
-
+* `/compiler`
+    Implementations of the data structures used in the generation of intermediate code for the compiler.
 ## Version #1
 
 ### ANTLR
@@ -136,13 +137,81 @@ The `variables` attribute looks like this.
 ### Neural Points
 In order to populate this tables, a series of neural points were implemented on the grammar to aid the semantic analysis based on the lexical analysis. This was done embeding JavaScript code on the `PatitoParser.g4` file. 4 points were implemented to manage the functions and the variables on the file.
 
-1. 	This action is executed when the `programa` rule is matched. It sets the `currType` to `programa`, assigns `currFunc` to the program’s name (ID), and adds the main function to the Function Directory with its type and identifier.
+#### 1. Function Directory and Variable Tables management
 
-2. This action is performed when a `variable` declaration (with type and identifiers) is encountered. It sets `currType` to the declared type and splits the identifier list (`lista_ids`) into individual variables. Each variable is then added to the current function’s variable table with the specified type.
+1.1 This action is executed when the `programa` rule is matched. It sets the `currType` to `programa`, assigns `currFunc` to the program’s name (ID), and adds the main function to the Function Directory with its type and identifier.
 
-3. When a new function declaration is detected, this action sets `currType` to `nula`, indicating a void function. It assigns `currFunc` to the function identifier. If the function already exists in the Function Directory, it logs an error. Otherwise, it adds the new function to the Function Directory with its identifier and type.
+1.2 This action is performed when a `variable` declaration (with type and identifiers) is encountered. It sets `currType` to the declared type and splits the identifier list (`lista_ids`) into individual variables. Each variable is then added to the current function’s variable table with the specified type.
 
-4. 	Executed when parsing a function parameter, this action sets `currType` to the parameter’s type and `currVar` to its identifier. It checks if the parameter is already defined in the current function’s variable list. If not, it adds the parameter to the current function’s variables in Function Directory with its type.
+1.3 When a new function declaration is detected, this action sets `currType` to `nula`, indicating a void function. It assigns `currFunc` to the function identifier. If the function already exists in the Function Directory, it logs an error. Otherwise, it adds the new function to the Function Directory with its identifier and type.
+
+1.4 Executed when parsing a function parameter, this action sets `currType` to the parameter’s type and `currVar` to its identifier. It checks if the parameter is already defined in the current function’s variable list. If not, it adds the parameter to the current function’s variables in Function Directory with its type.
+
+## Version #3
+
+### Data structures
+
+#### Stacks
+
+3 new classes were created to handle aritmetic and logic expressions, as well as conditional stantements and cycles present on the neural points. These classes were implemented using a base `Stack` class created on the initial commit of this repo, and all 3 are extensions of said class. 
+* OperandStack
+* OperatorStack
+* JumpStack
+
+#### Queues
+
+A new class was created to handle the quadruple list for all of the following neural points. This class was implemented as an extension of the original `Queue` class created on the initial commit of this repo.
+* QuadrupleQueue
+
+### Neural Points
+
+#### 2. Aritmetic and logic expressions 
+
+**2.1** Pushes the variable onto the operand stack for assignment operations.
+
+**2.2** Pushes the assignment operator (=) onto the operator stack.
+
+**2.3** Processes operand and determines it's type (variable, integer, or float), and pushes it to the operand stack.
+
+**2.4** Pushes either the + or - operator onto the operator stack.
+
+**2.5** Pushes either the * or / operator onto the operator stack.
+
+**2.6** Checks for addition or subtraction, pops operands and operator and generates a quadruple with the appropiate resulting type.
+
+**2.7** Checks for multiplication or division, pops operands and operator and generates a quadruple with the appropiate resulting type.
+
+**2.8** Pushes a left parenthesis ( onto the operator stack to handle nested expressions.
+
+**2.9** Checks for and pops a left parenthesis ( from the operator stack, ending nested expression.
+
+**2.10** Pushes a comparison operator onto the operator stack.
+
+**2.11** Checks for comparison operators (<, >, ==, !=), pops operands and operator from stacks, creates a result variable, and adds a comparison quadruple.
+
+**2.12** Handles assignment, pops remaining operator, and adds a quadruple for the assignment.
+
+#### 3. Printing
+
+**3.1** Adds a print quadruple with the value from the operand stack.
+
+**3.2** Adds a print quadruple for a string literal.
+
+#### 4. Conditional statement
+
+**4.1** Generates a gotoF (conditional jump) quadruple based on the result of an expression present on the operand stack, leaves jump position undefined.
+
+**4.2** Completes the if statement by filling in the jump position for an unconditional jump.
+
+**5.2** Generates an unconditional goto quadruple and sets up the jump location for else blocks.
+
+#### 5. Cycles
+
+**5.1** Pushes the current quadruple location for the start of a while loop onto the jump stack.
+
+**5.2** Generates a gotoF (conditional jump) quadruple based on the result of an expression present on the operand stack, leaves jump position undefined.
+
+**5.2** Generates a goto quadruple to loop back to the start and fills in the exit jump location for the loop.
 
 ## Testing
 1. To run the tests that verify the functionality of the data structure implementations, parser and lexer, you need to install `node`.
