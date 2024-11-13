@@ -1,0 +1,23 @@
+programa test1;
+
+vars 
+A, B: entero;
+C, D: flotante;
+
+nula suma(num1: entero, num2: flotante)
+{
+    vars resultado: flotante; 
+    {
+        resultado = num1 + num2;
+        imprime(resultado);
+    }
+};
+
+inicio
+{
+    A = 0;
+    B = 1;
+
+    suma(A, B);
+}
+fin

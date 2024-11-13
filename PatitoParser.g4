@@ -8,7 +8,7 @@ programa:
 	PROGRAM ID { 
 		// Sematic action #1.1
 		this.currType = $PROGRAM.text;
-		this.currFunc = $ID.text;
+		this.currFunc = 'global';
 		this.FunctionDir.addFunction(this.currFunc, this.currType);
 	} SEMICOLON tiene_vars lista_funcs INICIO cuerpo FIN;
 
@@ -22,7 +22,7 @@ lista_vars:
 		let var_list = $lista_ids.text;
 		let var_list_array = var_list.split(",");
 		var_list_array.forEach((_var) => {
-			this.FunctionDir.functions[this.currFunc].variables.addVar(_var, this.currType)
+			this.FunctionDir.addVar(_var, this.currType, this.currFunc);
 		});
 	} SEMICOLON;
 lista_ids: ID mas_ids;
@@ -40,7 +40,7 @@ funcs:
 		}
 
 		this.FunctionDir.addFunction(this.currFunc, this.currType);
-	} LPAR lista_params RPAR LBRACE tiene_vars cuerpo RBRACE SEMICOLON;
+	} LPAR lista_params RPAR LBRACE tiene_vars cuerpo RBRACE SEMICOLON {this.currFunc = 'global'};
 lista_params: param mas_params |;
 mas_params: COMMA param mas_params |;
 param:
@@ -48,11 +48,11 @@ param:
 		// Semantic action #1.4
 		this.currType = $tipo.text;
 		this.currVar = $ID.text;
-		if(this.FunctionDir.functions[this.currFunc].variables.hasVariable(this.currVar)){
+		if(this.FunctionDir.hasVariable(this.currFunc, this.currVar)){
 			console.error(`La función ${this.currVar} ya está definida`);
 		}
 		else {
-			this.FunctionDir.functions[this.currFunc].variables.addVar(this.currVar, this.currType)
+			this.FunctionDir.addVar(this.currVar, this.currType, this.currFunc)
 		}
 	};
 
@@ -66,16 +66,19 @@ asigna:
 	ID {
 		// Semantic action #2.1
 		this.currVar = $ID.text;
-		this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables.variables[this.currVar]);
-	} ASSIGN {this.OperatorStack.push($ASSIGN.text) // Semantic action #2.2} expresion {
-			// Semantic action #2.12
-			if(this.OperatorStack.top() == '=' ){
-				let leftOperand = this.OperandStack.pop();
-				let resultVariable =  this.OperandStack.pop();
-				let operator = this.OperatorStack.pop();
-				this.QuadruplesQueue.addQuadruple(operator, leftOperand, null, resultVariable);
-			}
-		} SEMICOLON;
+		this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables[this.currVar]);
+	} ASSIGN {
+		// Semantic action #2.2
+		this.OperatorStack.push($ASSIGN.text)
+	} expresion {
+		// Semantic action #2.12
+		if(this.OperatorStack.top() == '=' ){
+			let leftOperand = this.OperandStack.pop();
+			let resultVariable =  this.OperandStack.pop();
+			let operator = this.OperatorStack.pop();
+			this.QuadruplesQueue.addQuadruple(this.SematicCube[operator]['code'], leftOperand, null, resultVariable);
+		}
+	} SEMICOLON;
 
 condicion:
 	SI LPAR expresion RPAR {
@@ -138,12 +141,15 @@ imprimibles:
 	};
 
 expresion:
-	exp comparador {this.OperatorStack.push($comparador.text); // Semantic action #2.10} exp {
+	exp comparador {
+		// Semantic action #2.10
+		this.OperatorStack.push($comparador.text); 
+	} exp {
 		// Semantic action #2.11
 		if(
-			this.OperatorStack.top() == '<' 
-			|| this.OperatorStack.top() == '>' 
-			|| this.OperatorStack.top() == '==' 
+			this.OperatorStack.top() == '<'
+			|| this.OperatorStack.top() == '>'
+			|| this.OperatorStack.top() == '=='
 			|| this.OperatorStack.top() == '!='
 			)
 		{
@@ -153,7 +159,7 @@ expresion:
 			let resultType = this.SematicCube[operator][leftOperand.type][rightOperand.type];
 			let resultVariable = this.QuadruplesQueue.newTempVariable(resultType);
 			this.OperandStack.push(resultVariable);
-			this.QuadruplesQueue.addQuadruple(operator, leftOperand, rightOperand, resultVariable);
+			this.QuadruplesQueue.addQuadruple(this.SematicCube[operator]['code'], leftOperand, rightOperand, resultVariable);
 		}
 	}
 	| exp;
@@ -166,21 +172,24 @@ exp:
 			let rightOperand =  this.OperandStack.pop();
 			let leftOperand = this.OperandStack.pop();
 			let operator = this.OperatorStack.pop();
-			let resultType = this.SematicCube[operator][leftOperand.type][rightOperand.type];
-			let resultVariable = this.QuadruplesQueue.newTempVariable(resultType);
+			let rightType = this.FunctionDir.getVariableType(rightOperand);
+			let leftType = this.FunctionDir.getVariableType(leftOperand);
+			console.log(operator);
+			let resultType = this.SematicCube[operator][rightType][leftType];
+			let resultVariable = this.FunctionDir.addVar('t', resultType, this.currFunc, true);
 			this.OperandStack.push(resultVariable);
-			this.QuadruplesQueue.addQuadruple(operator, leftOperand, rightOperand, resultVariable);
+			this.QuadruplesQueue.addQuadruple(this.SematicCube[operator]['code'], leftOperand, rightOperand, resultVariable);
 		}
 	} operaciones_signo*;
 
 operaciones_signo:
 	PLUS {
 		// Semantic action #2.4
-		this.OperatorStack.push($PLUS.text)
+		this.OperatorStack.push($PLUS.text); 
 	} exp
 	| MINUS {
 		// Semantic action #2.4
-		this.OperatorStack.push($MINUS.text)
+		this.OperatorStack.push($MINUS.text); 
 	} exp;
 
 termino:
@@ -190,25 +199,30 @@ termino:
 			let rightOperand =  this.OperandStack.pop();
 			let leftOperand = this.OperandStack.pop();
 			let operator = this.OperatorStack.pop();
-			let resultType = this.SematicCube[operator][leftOperand.type][rightOperand.type];
-			let resultVariable = this.QuadruplesQueue.newTempVariable(resultType);
+			let rightType = this.FunctionDir.getVariableType(rightOperand);
+			let leftType = this.FunctionDir.getVariableType(leftOperand);
+			let resultType = this.SematicCube[operator][rightType][leftType];
+			let resultVariable = this.FunctionDir.addVar('t', resultType, this.currFunc, true);
 			this.OperandStack.push(resultVariable);
-			this.QuadruplesQueue.addQuadruple(operator, leftOperand, rightOperand, resultVariable);
+			this.QuadruplesQueue.addQuadruple(this.SematicCube[operator]['code'], leftOperand, rightOperand, resultVariable);
 		}
 	} operaciones_factor*;
 
 operaciones_factor:
 	MULT {
 			// Semantic action #2.5
-			this.OperatorStack.push($MULT.text);
+			this.OperatorStack.push($MULT.text); 
 		} termino
 	| DIV {
 			// Semantic action #2.5
-			this.OperatorStack.push($DIV.text);
+			this.OperatorStack.push($DIV.text); 
 		} termino;
 
 factor:
-	LPAR {this.OperatorStack.push($LPAR.text); // Semantic action #2.8} expresion {
+	LPAR {
+		// Semantic action #2.8
+		this.OperatorStack.push($LPAR.text); 
+	} expresion {
 			// Semantic action #2.9
 			if(this.OperatorStack.top() == "("){
 				this.OperatorStack.pop();
@@ -229,11 +243,13 @@ factor:
 		const REGEX_CTE_FLOT = /^[0-9]+\.[0-9]+$/;
 
 		if($operandos_factor.text.match(REGEX_ID)) {
-			this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables.variables[this.currVar]);
+			this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables[this.currVar]);
 		} else if($operandos_factor.text.match(REGEX_CTE_ENT)) {
-			this.OperandStack.push({ name: this.currVar, type: 'entero' });
+			let constant = this.FunctionDir.addVar('c', 'entero', this.currFunc, false, true);
+			this.OperandStack.push(constant);
 		} else if($operandos_factor.text.match(REGEX_CTE_FLOT)) {
-			this.OperandStack.push({ name: this.currVar, type: 'flotante' });
+			let constant = this.FunctionDir.addVar('c', 'flotante', this.currFunc, false, true);
+			this.OperandStack.push(constant);
 		} 
 	};
 operadores_signo: PLUS | MINUS |;

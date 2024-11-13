@@ -213,6 +213,21 @@ A new class was created to handle the quadruple list for all of the following ne
 
 **5.2** Generates a goto quadruple to loop back to the start and fills in the exit jump location for the loop.
 
+## Version #4
+
+### Virtual Memory Direction
+
+An object containing the memory direction ranges for different kinds of variables was declared on the `FunctionDir.js`file. This replaces the previous ussage of variables as objects containing a `name` and `type` attributes.
+
+| Type      | RANGE          | INT            | FLOAT          | STRING         |
+|-----------|----------------|----------------|----------------|----------------|
+| Global    | [1000, 9999]   | [1000, 4999]   | [5000, 9999]   | -              |
+| Temporal  | [10000, 19999] | [10000, 14999] | [15000, 19999] | -              |
+| Local     | [20000, 29999] | [20000, 24999] | [25000, 29999] | -              |
+| Constante | [30000, 44999] | [30000, 34999] | [35000, 39999] | [40000, 44999] |
+
+The code was updated to handle variable creation through this process, the class `VarTable` was deprecated and was absorved by `FunctionDir`; now adding variables increases a counter to manage the memory direction assigned to each variable, as well as determining the ammoun of resources needed by the program.
+
 ## Testing
 1. To run the tests that verify the functionality of the data structure implementations, parser and lexer, you need to install `node`.
 
