@@ -30,7 +30,10 @@ export class FunctionDir {
                 console.log(`==${_function}==`)
                 console.log(`Name: ${element.name}`)
                 console.log(`Type: ${element.type}`)
+                console.log(`Start: ${element.start}`)
+                console.log(`Local Resources: ${element.localResources}`)
                 console.log(`Variables: ${JSON.stringify(element.variables)}`);
+                console.log(`Parameters: ${JSON.stringify(element.parameters)}`);
             }
         }
     }
@@ -39,7 +42,7 @@ export class FunctionDir {
         if (this.functions[name]) {
             console.error('This function already exists');
         } else {
-            this.functions[name] = { name, type, variables: {} };
+            this.functions[name] = { name, type, variables: {}, start: null, parameters: [], localResources: 0 };
         }
     }
 
@@ -48,7 +51,6 @@ export class FunctionDir {
     }
 
     getVariableType(address) {
-        console.log('Address', address)
         if (address >= 1000 && address <= 4999) return 'entero';
         if (address >= 5000 && address <= 9999) return 'flotante';
         if (address >= 10000 && address <= 14999) return 'entero';
@@ -59,9 +61,13 @@ export class FunctionDir {
         if (address >= 35000 && address <= 39999) return 'flotante';
         if (address >= 40000 && address <= 44999) return 'letrero';
 
-        console.error('Invalid address')
+        console.error('Invalid memory address: ', address)
 
         return null;
+    }
+
+    addParameter(dir, currentFunction) {
+        this.functions[currentFunction].parameters.push(dir);
     }
 
     addVar(name, type, currentFunction, isTemporal = false, isConstant = false) {
@@ -79,7 +85,13 @@ export class FunctionDir {
             memoryAddress = this.memoryCounters['constant'][type]++;
             name += memoryAddress;
         } else {
-            const scope = this.functions[currentFunction].type == 'programa' ? 'global' : 'local';
+            let scope;
+            if (this.functions[currentFunction].type == 'programa') {
+                scope = 'global';
+            } else {
+                scope = 'local';
+                this.functions[currentFunction].localResources++;
+            }
             memoryAddress = this.memoryCounters[scope][type]++;
         }
 
@@ -89,6 +101,10 @@ export class FunctionDir {
 
     hasVariable(currentFunction, name) {
         return this.functions[currentFunction].variables.hasOwnProperty(name)
+    }
+
+    releaseVarTable(currentFunction) {
+        delete this.functions[currentFunction].variables;
     }
 
 }

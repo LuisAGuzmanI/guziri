@@ -228,6 +228,56 @@ An object containing the memory direction ranges for different kinds of variable
 
 The code was updated to handle variable creation through this process, the class `VarTable` was deprecated and was absorved by `FunctionDir`; now adding variables increases a counter to manage the memory direction assigned to each variable, as well as determining the ammoun of resources needed by the program.
 
+### Operator codes
+
+Operator codes were implemented for quadruples, assigning each operator a numerical value which can be easily read. THe codes are the following:
+
+| Operator   | Description      | Code |
+|------------|------------------|------|
+| +          | Addition         | 1    |
+| -          | Subtraction      | 2    |
+| *          | Multiplication   | 3    |
+| /          | Division         | 4    |
+| >          | More than        | 5    |
+| <          | Less than        | 6    |
+| ==         | Equals           | 7    |
+| !=         | Doesn't equal    | 8    |
+| =          | Assignation      | 9    |
+| print      | Print            | 10   |
+| goto       | Goto             | 11   |
+| goto True  | Goto if True     | 12   |
+| goto False | Goto if False    | 13   |
+| endfunc    | End Function     | 14   |
+| era        | Activation Record| 15   |
+| gosub      | Go to Subroutine | 16   |
+| param      | Parameter        | 17   |
+
+### Neural points
+
+#### 6. Modules
+
+##### 6.1 Module declaration
+
+**6.1.1** Adds the module to the function directory.
+
+**6.1.2** Adds the parameter to the variable table and parameter list of the function.
+
+**6.1.3** Sets the start quadruple for the function on the function directory.
+
+**6.1.4** Releases the variable table for the declared function, adds 'endfuncion' quadruple to signify the end of the function.
+
+##### 6.2 Module declaration
+
+**6.2.1** Verifies the existence of the function in the function directory. Logs an error if the function is undefined.
+
+**6.2.2** Adds an ERA quadruple to prepare the memory for the function call and initializes the parameter counter.
+
+**6.2.3** Pops a parameter from the operand stack, checks its type, and adds a PARAM quadruple to associate it with a formal parameter. Throws error if number of parameters is exceded. Increments the parameter counter for the next parameter.
+
+**6.2.4** Checks that the parameter counter points to a null element.
+
+**6.2.4** Adds a GOSUB quadruple to jump to the functions start address and resume execution there.
+
 ## Testing
 1. To run the tests that verify the functionality of the data structure implementations, parser and lexer, you need to install `node`.
 

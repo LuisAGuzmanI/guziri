@@ -9,15 +9,24 @@ nula suma(num1: entero, num2: flotante)
     vars resultado: flotante; 
     {
         resultado = num1 + num2;
-        imprime(resultado);
+        escribe(resultado);
+    }
+};
+
+nula resta(num1: entero, num2: flotante)
+{
+    vars resultado: flotante; 
+    {
+        resultado = num1 - num2;
+        escribe(resultado);
     }
 };
 
 inicio
 {
     A = 0;
-    B = 1;
+    D = 1;
 
-    suma(A, B);
+    suma(A, D);
 }
 fin

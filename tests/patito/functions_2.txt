@@ -1,0 +1,38 @@
+programa pelos;
+
+vars i, j, k: entero;
+
+nula uno(j: entero)
+{
+    vars i: entero;
+    {
+        i = j + (k - j * 2 + j);
+        si(j > 0) {
+            regresa uno(i - j); 
+        } sino {
+            regresa i + k;
+        };
+    }
+};
+
+nula dos(i: entero, j: entero)
+{
+    vars x, y: entero;
+    {
+        x = i + j;
+        si(x > j * k) {
+            escribe(uno(x - k));
+        } sino {
+            escribe(uno(j));
+        };
+    }
+};
+
+inicio
+{
+    lee(k);
+    i = 5;
+    j = i * 2 + i;
+    dos(j - i, j);
+}
+fin
