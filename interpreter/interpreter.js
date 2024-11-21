@@ -29,7 +29,7 @@ export class VirtualMachine {
             const objText = await readFile(`./output/${this.fileName}_obj.txt`, { encoding: 'utf8' });
 
             // Quadruples, Functions, Constants, Allocated Memory
-            let [q, f, c, m] = objText.split('-')
+            let [q, f, c, m] = objText.split('$')
             q = q.trim();
             f = f.trim();
             c = c.trim();
@@ -116,7 +116,6 @@ export class VirtualMachine {
                     break;
 
                 case 9: // Assignation
-                    console.log('Assignation: ', this.getValue(leftOperand))
                     this.setValue(result, this.getValue(leftOperand));
                     break;
 

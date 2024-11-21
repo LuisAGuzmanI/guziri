@@ -89,6 +89,7 @@ asigna:
 		// Semantic action #2.2
 		this.OperatorStack.push($ASSIGN.text)
 	} expresion {
+		console.log($expresion.text)
 		// Semantic action #2.12
 		if(this.OperatorStack.top() == '=' ){
 			let leftOperand = this.OperandStack.pop();
@@ -290,26 +291,38 @@ factor:
 			}
 		} RPAR
 	| operadores_signo operandos_factor {
-		 // Semantic action #2.3
-		if($operadores_signo.text == '-'){
-			this.currVar = '-' + $operandos_factor.text;
-		} else {
-			this.currVar = $operandos_factor.text;
-		}
-
+		// Semantic action #2.3
 		const REGEX_ID = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
 		const REGEX_CTE_ENT = /^[0-9]+$/;
 		const REGEX_CTE_FLOT = /^[0-9]+\.[0-9]+$/;
 
-		if($operandos_factor.text.match(REGEX_ID)) {
-			this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables[this.currVar]);
-		} else if($operandos_factor.text.match(REGEX_CTE_ENT)) {
-			let constant = this.FunctionDir.addVar(this.currVar, 'entero', this.currFunc, false, true);
-			this.OperandStack.push(constant);
-		} else if($operandos_factor.text.match(REGEX_CTE_FLOT)) {
-			let constant = this.FunctionDir.addVar(this.currVar, 'flotante', this.currFunc, false, true);
-			this.OperandStack.push(constant);
-		} 
+		this.currVar = $operandos_factor.text
+
+		if($operandos_factor.text.match(REGEX_ID) && $operadores_signo.text == '-') {
+			let rightOperand =  this.FunctionDir.functions[this.currFunc].variables[this.currVar];
+			let leftOperand = this.FunctionDir.addVar('0', 'entero', this.currFunc, false, true);
+			let operator = '-';
+			let rightType = this.FunctionDir.getVariableType(rightOperand);
+			let leftType = this.FunctionDir.getVariableType(leftOperand);
+			let resultType = this.SematicCube[operator][rightType][leftType];
+			let resultVariable = this.FunctionDir.addVar('t', resultType, this.currFunc, true);
+			this.OperandStack.push(resultVariable);
+			this.QuadruplesQueue.addQuadruple(this.SematicCube[operator]['code'], leftOperand, rightOperand, resultVariable);
+		} else {
+			if($operadores_signo.text == '-'){
+				this.currVar = '-' + this.currVar;
+			}
+
+			if($operandos_factor.text.match(REGEX_ID)) {
+				this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables[this.currVar]);
+			} else if($operandos_factor.text.match(REGEX_CTE_ENT)) {
+				let constant = this.FunctionDir.addVar(this.currVar, 'entero', this.currFunc, false, true);
+				this.OperandStack.push(constant);
+			} else if($operandos_factor.text.match(REGEX_CTE_FLOT)) {
+				let constant = this.FunctionDir.addVar(this.currVar, 'flotante', this.currFunc, false, true);
+				this.OperandStack.push(constant);
+			} 
+		}
 	};
 operadores_signo: PLUS | MINUS |;
 operandos_factor: ID | cte;

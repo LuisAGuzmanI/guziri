@@ -790,8 +790,9 @@ export default class PatitoParserParser extends antlr4.Parser {
 	        		this.OperatorStack.push((localctx._ASSIGN == null ? null : localctx._ASSIGN.text))
 	        	
 	        this.state = 175;
-	        this.expresion();
+	        localctx._expresion = this.expresion();
 
+	        		console.log((localctx._expresion == null ? null : this._input.getText(new antlr4.Interval(localctx._expresion.start,localctx._expresion.stop))))
 	        		// Semantic action #2.12
 	        		if(this.OperatorStack.top() == '=' ){
 	        			let leftOperand = this.OperandStack.pop();
@@ -1611,26 +1612,38 @@ export default class PatitoParserParser extends antlr4.Parser {
 	            this.state = 315;
 	            localctx._operandos_factor = this.operandos_factor();
 
-	            		 // Semantic action #2.3
-	            		if((localctx._operadores_signo == null ? null : this._input.getText(new antlr4.Interval(localctx._operadores_signo.start,localctx._operadores_signo.stop))) == '-'){
-	            			this.currVar = '-' + (localctx._operandos_factor == null ? null : this._input.getText(new antlr4.Interval(localctx._operandos_factor.start,localctx._operandos_factor.stop)));
-	            		} else {
-	            			this.currVar = (localctx._operandos_factor == null ? null : this._input.getText(new antlr4.Interval(localctx._operandos_factor.start,localctx._operandos_factor.stop)));
-	            		}
-
+	            		// Semantic action #2.3
 	            		const REGEX_ID = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
 	            		const REGEX_CTE_ENT = /^[0-9]+$/;
 	            		const REGEX_CTE_FLOT = /^[0-9]+\.[0-9]+$/;
 
-	            		if((localctx._operandos_factor == null ? null : this._input.getText(new antlr4.Interval(localctx._operandos_factor.start,localctx._operandos_factor.stop))).match(REGEX_ID)) {
-	            			this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables[this.currVar]);
-	            		} else if((localctx._operandos_factor == null ? null : this._input.getText(new antlr4.Interval(localctx._operandos_factor.start,localctx._operandos_factor.stop))).match(REGEX_CTE_ENT)) {
-	            			let constant = this.FunctionDir.addVar(this.currVar, 'entero', this.currFunc, false, true);
-	            			this.OperandStack.push(constant);
-	            		} else if((localctx._operandos_factor == null ? null : this._input.getText(new antlr4.Interval(localctx._operandos_factor.start,localctx._operandos_factor.stop))).match(REGEX_CTE_FLOT)) {
-	            			let constant = this.FunctionDir.addVar(this.currVar, 'flotante', this.currFunc, false, true);
-	            			this.OperandStack.push(constant);
-	            		} 
+	            		this.currVar = (localctx._operandos_factor == null ? null : this._input.getText(new antlr4.Interval(localctx._operandos_factor.start,localctx._operandos_factor.stop)))
+
+	            		if((localctx._operandos_factor == null ? null : this._input.getText(new antlr4.Interval(localctx._operandos_factor.start,localctx._operandos_factor.stop))).match(REGEX_ID) && (localctx._operadores_signo == null ? null : this._input.getText(new antlr4.Interval(localctx._operadores_signo.start,localctx._operadores_signo.stop))) == '-') {
+	            			let rightOperand =  this.FunctionDir.functions[this.currFunc].variables[this.currVar];
+	            			let leftOperand = this.FunctionDir.addVar('0', 'entero', this.currFunc, false, true);
+	            			let operator = '-';
+	            			let rightType = this.FunctionDir.getVariableType(rightOperand);
+	            			let leftType = this.FunctionDir.getVariableType(leftOperand);
+	            			let resultType = this.SematicCube[operator][rightType][leftType];
+	            			let resultVariable = this.FunctionDir.addVar('t', resultType, this.currFunc, true);
+	            			this.OperandStack.push(resultVariable);
+	            			this.QuadruplesQueue.addQuadruple(this.SematicCube[operator]['code'], leftOperand, rightOperand, resultVariable);
+	            		} else {
+	            			if((localctx._operadores_signo == null ? null : this._input.getText(new antlr4.Interval(localctx._operadores_signo.start,localctx._operadores_signo.stop))) == '-'){
+	            				this.currVar = '-' + this.currVar;
+	            			}
+
+	            			if((localctx._operandos_factor == null ? null : this._input.getText(new antlr4.Interval(localctx._operandos_factor.start,localctx._operandos_factor.stop))).match(REGEX_ID)) {
+	            				this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables[this.currVar]);
+	            			} else if((localctx._operandos_factor == null ? null : this._input.getText(new antlr4.Interval(localctx._operandos_factor.start,localctx._operandos_factor.stop))).match(REGEX_CTE_ENT)) {
+	            				let constant = this.FunctionDir.addVar(this.currVar, 'entero', this.currFunc, false, true);
+	            				this.OperandStack.push(constant);
+	            			} else if((localctx._operandos_factor == null ? null : this._input.getText(new antlr4.Interval(localctx._operandos_factor.start,localctx._operandos_factor.stop))).match(REGEX_CTE_FLOT)) {
+	            				let constant = this.FunctionDir.addVar(this.currVar, 'flotante', this.currFunc, false, true);
+	            				this.OperandStack.push(constant);
+	            			} 
+	            		}
 	            	
 	            break;
 	        default:
@@ -2569,6 +2582,7 @@ class AsignaContext extends antlr4.ParserRuleContext {
         this.ruleIndex = PatitoParserParser.RULE_asigna;
         this._ID = null;
         this._ASSIGN = null;
+        this._expresion = null;
     }
 
 	ID() {

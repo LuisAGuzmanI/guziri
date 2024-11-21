@@ -76,7 +76,7 @@ export const compile = async (fileName = 'functions', showQuadruples) => {
             }
         }
 
-        const objText = [quadruplesText, functionsText.trim(), constantsText, resourcesText].join('\n-\n');
+        const objText = [quadruplesText, functionsText.trim(), constantsText, resourcesText].join('\n$\n');
 
         await writeFile(`./output/${fileName}_obj.txt`, objText)
 

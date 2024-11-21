@@ -969,6 +969,7 @@ public class PatitoParserParser extends Parser {
 	public static class AsignaContext extends ParserRuleContext {
 		public Token ID;
 		public Token ASSIGN;
+		public ExpresionContext expresion;
 		public TerminalNode ID() { return getToken(PatitoParserParser.ID, 0); }
 		public TerminalNode ASSIGN() { return getToken(PatitoParserParser.ASSIGN, 0); }
 		public ExpresionContext expresion() {
@@ -1001,8 +1002,9 @@ public class PatitoParserParser extends Parser {
 					this.OperatorStack.push((((AsignaContext)_localctx).ASSIGN!=null?((AsignaContext)_localctx).ASSIGN.getText():null))
 				
 			setState(175);
-			expresion();
+			((AsignaContext)_localctx).expresion = expresion();
 
+					console.log((((AsignaContext)_localctx).expresion!=null?_input.getText(((AsignaContext)_localctx).expresion.start,((AsignaContext)_localctx).expresion.stop):null))
 					// Semantic action #2.12
 					if(this.OperatorStack.top() == '=' ){
 						let leftOperand = this.OperandStack.pop();
@@ -2101,26 +2103,38 @@ public class PatitoParserParser extends Parser {
 				setState(315);
 				((FactorContext)_localctx).operandos_factor = operandos_factor();
 
-						 // Semantic action #2.3
-						if((((FactorContext)_localctx).operadores_signo!=null?_input.getText(((FactorContext)_localctx).operadores_signo.start,((FactorContext)_localctx).operadores_signo.stop):null) == '-'){
-							this.currVar = '-' + (((FactorContext)_localctx).operandos_factor!=null?_input.getText(((FactorContext)_localctx).operandos_factor.start,((FactorContext)_localctx).operandos_factor.stop):null);
-						} else {
-							this.currVar = (((FactorContext)_localctx).operandos_factor!=null?_input.getText(((FactorContext)_localctx).operandos_factor.start,((FactorContext)_localctx).operandos_factor.stop):null);
-						}
-
+						// Semantic action #2.3
 						const REGEX_ID = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
 						const REGEX_CTE_ENT = /^[0-9]+$/;
 						const REGEX_CTE_FLOT = /^[0-9]+\.[0-9]+$/;
 
-						if((((FactorContext)_localctx).operandos_factor!=null?_input.getText(((FactorContext)_localctx).operandos_factor.start,((FactorContext)_localctx).operandos_factor.stop):null).match(REGEX_ID)) {
-							this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables[this.currVar]);
-						} else if((((FactorContext)_localctx).operandos_factor!=null?_input.getText(((FactorContext)_localctx).operandos_factor.start,((FactorContext)_localctx).operandos_factor.stop):null).match(REGEX_CTE_ENT)) {
-							let constant = this.FunctionDir.addVar(this.currVar, 'entero', this.currFunc, false, true);
-							this.OperandStack.push(constant);
-						} else if((((FactorContext)_localctx).operandos_factor!=null?_input.getText(((FactorContext)_localctx).operandos_factor.start,((FactorContext)_localctx).operandos_factor.stop):null).match(REGEX_CTE_FLOT)) {
-							let constant = this.FunctionDir.addVar(this.currVar, 'flotante', this.currFunc, false, true);
-							this.OperandStack.push(constant);
-						} 
+						this.currVar = (((FactorContext)_localctx).operandos_factor!=null?_input.getText(((FactorContext)_localctx).operandos_factor.start,((FactorContext)_localctx).operandos_factor.stop):null)
+
+						if((((FactorContext)_localctx).operandos_factor!=null?_input.getText(((FactorContext)_localctx).operandos_factor.start,((FactorContext)_localctx).operandos_factor.stop):null).match(REGEX_ID) && (((FactorContext)_localctx).operadores_signo!=null?_input.getText(((FactorContext)_localctx).operadores_signo.start,((FactorContext)_localctx).operadores_signo.stop):null) == '-') {
+							let rightOperand =  this.FunctionDir.functions[this.currFunc].variables[this.currVar];
+							let leftOperand = this.FunctionDir.addVar('0', 'entero', this.currFunc, false, true);
+							let operator = '-';
+							let rightType = this.FunctionDir.getVariableType(rightOperand);
+							let leftType = this.FunctionDir.getVariableType(leftOperand);
+							let resultType = this.SematicCube[operator][rightType][leftType];
+							let resultVariable = this.FunctionDir.addVar('t', resultType, this.currFunc, true);
+							this.OperandStack.push(resultVariable);
+							this.QuadruplesQueue.addQuadruple(this.SematicCube[operator]['code'], leftOperand, rightOperand, resultVariable);
+						} else {
+							if((((FactorContext)_localctx).operadores_signo!=null?_input.getText(((FactorContext)_localctx).operadores_signo.start,((FactorContext)_localctx).operadores_signo.stop):null) == '-'){
+								this.currVar = '-' + this.currVar;
+							}
+
+							if((((FactorContext)_localctx).operandos_factor!=null?_input.getText(((FactorContext)_localctx).operandos_factor.start,((FactorContext)_localctx).operandos_factor.stop):null).match(REGEX_ID)) {
+								this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables[this.currVar]);
+							} else if((((FactorContext)_localctx).operandos_factor!=null?_input.getText(((FactorContext)_localctx).operandos_factor.start,((FactorContext)_localctx).operandos_factor.stop):null).match(REGEX_CTE_ENT)) {
+								let constant = this.FunctionDir.addVar(this.currVar, 'entero', this.currFunc, false, true);
+								this.OperandStack.push(constant);
+							} else if((((FactorContext)_localctx).operandos_factor!=null?_input.getText(((FactorContext)_localctx).operandos_factor.start,((FactorContext)_localctx).operandos_factor.stop):null).match(REGEX_CTE_FLOT)) {
+								let constant = this.FunctionDir.addVar(this.currVar, 'flotante', this.currFunc, false, true);
+								this.OperandStack.push(constant);
+							} 
+						}
 					
 				}
 				break;

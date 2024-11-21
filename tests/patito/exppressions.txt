@@ -6,15 +6,13 @@ D, E: flotante;
 
 inicio
 {
-    A = 1;
+    A = 3;
     B = 2;
-    si (A < B) {
+    C = -B;
+    mientras (A < B) haz {
         A = 2;
-        escribe("Resultado 1");
-    } sino {
-        A = 3;
-        escribe("Resultado 2!");
+        escribe("Entró");
     };
-    escribe(A * B);
+    escribe("Salió!", A * B + C);
 }
 fin
