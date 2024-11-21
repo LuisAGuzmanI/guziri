@@ -21,6 +21,8 @@ export class FunctionDir {
                 'letrero': 40000, // STRING [40000, 44999]
             },
         }
+
+        this.constants = []
     }
 
     getFunctions() {
@@ -78,11 +80,14 @@ export class FunctionDir {
 
         let memoryAddress;
 
+        if (isConstant) {
+            memoryAddress = this.memoryCounters['constant'][type]++;
+            this.constants.push({ memoryAddress, value: name });
+            return memoryAddress;
+        }
+
         if (isTemporal) {
             memoryAddress = this.memoryCounters['temporal'][type]++;
-            name += memoryAddress;
-        } else if (isConstant) {
-            memoryAddress = this.memoryCounters['constant'][type]++;
             name += memoryAddress;
         } else {
             let scope;

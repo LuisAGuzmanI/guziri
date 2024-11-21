@@ -276,7 +276,7 @@ Operator codes were implemented for quadruples, assigning each operator a numeri
 
 **6.2.4** Checks that the parameter counter points to a null element.
 
-**6.2.4** Adds a GOSUB quadruple to jump to the functions start address and resume execution there.
+**6.2.5** Adds a GOSUB quadruple to jump to the functions start address and resume execution there.
 
 ## Testing
 1. To run the tests that verify the functionality of the data structure implementations, parser and lexer, you need to install `node`.

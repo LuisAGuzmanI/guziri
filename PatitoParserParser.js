@@ -835,7 +835,7 @@ export default class PatitoParserParser extends antlr4.Parser {
 
 	        		// Semantic action #4.1
 	        		const expResult = this.OperandStack.pop();
-	        		if(expResult.type != 'entero'){
+	        		if(this.FunctionDir.getVariableType(expResult) != 'entero'){
 	        			console.error("Expected integer expression result on if statement")
 	        		} else {
 	        			this.QuadruplesQueue.addQuadruple(13, expResult, null, undefined);
@@ -927,7 +927,7 @@ export default class PatitoParserParser extends antlr4.Parser {
 
 	        		// Semantic action #5.2
 	        		const expResult = this.OperandStack.pop();
-	        		if(expResult.type != 'entero'){
+	        		if(this.FunctionDir.getVariableType(expResult) != 'entero'){
 	        			console.error("Expected integer expression result on if statement")
 	        		} else {
 	        			this.QuadruplesQueue.addQuadruple(13, expResult, null, undefined);
@@ -982,7 +982,7 @@ export default class PatitoParserParser extends antlr4.Parser {
 	        this.match(PatitoParserParser.LPAR);
 
 	        		// Semantic action 6.2.2
-	        		this.QuadruplesQueue.addQuadruple(14, this.calledFunction, null, null);
+	        		this.QuadruplesQueue.addQuadruple(15, this.calledFunction, null, null);
 	        		this.parameterCounter = 0;
 	        	
 	        this.state = 216;
@@ -1004,7 +1004,7 @@ export default class PatitoParserParser extends antlr4.Parser {
 	        this.match(PatitoParserParser.RPAR);
 
 	        		// Semantic action 6.2.5
-	        		this.QuadruplesQueue.addQuadruple(14, this.calledFunction, null, this.FunctionDir.functions[this.calledFunction].start);
+	        		this.QuadruplesQueue.addQuadruple(16, this.calledFunction, null, this.FunctionDir.functions[this.calledFunction].start);
 	        		delete this.calledFunction;
 	        	
 	        this.state = 222;
@@ -1048,7 +1048,7 @@ export default class PatitoParserParser extends antlr4.Parser {
 	        			console.error('Parameter does not match type declaration')
 	        		}
 	         
-	        		this.QuadruplesQueue.addQuadruple(14, exp, null, parameter);
+	        		this.QuadruplesQueue.addQuadruple(17, exp, null, parameter);
 
 	        		this.parameterCounter++;
 	        	
@@ -1257,7 +1257,8 @@ export default class PatitoParserParser extends antlr4.Parser {
 	            localctx._LETRERO = this.match(PatitoParserParser.LETRERO);
 
 	            		// Semantic action #3.2
-	            		this.QuadruplesQueue.addQuadruple(10, null, null, (localctx._LETRERO == null ? null : localctx._LETRERO.text));
+	            		let stringAddress = this.FunctionDir.addVar((localctx._LETRERO == null ? null : localctx._LETRERO.text).substring(1, (localctx._LETRERO == null ? null : localctx._LETRERO.text).length-1), 'letrero', this.currFunc, false, true);
+	            		this.QuadruplesQueue.addQuadruple(10, null, null, stringAddress);
 	            	
 	            break;
 	        default:
@@ -1311,8 +1312,10 @@ export default class PatitoParserParser extends antlr4.Parser {
 	            			let rightOperand =  this.OperandStack.pop();
 	            			let leftOperand = this.OperandStack.pop();
 	            			let operator = this.OperatorStack.pop();
-	            			let resultType = this.SematicCube[operator][leftOperand.type][rightOperand.type];
-	            			let resultVariable = this.QuadruplesQueue.newTempVariable(resultType);
+	            			let rightType = this.FunctionDir.getVariableType(rightOperand);
+	            			let leftType = this.FunctionDir.getVariableType(leftOperand);
+	            			let resultType = this.SematicCube[operator][rightType][leftType];
+	            			let resultVariable = this.FunctionDir.addVar('t', resultType, this.currFunc, true);
 	            			this.OperandStack.push(resultVariable);
 	            			this.QuadruplesQueue.addQuadruple(this.SematicCube[operator]['code'], leftOperand, rightOperand, resultVariable);
 	            		}
@@ -1622,10 +1625,10 @@ export default class PatitoParserParser extends antlr4.Parser {
 	            		if((localctx._operandos_factor == null ? null : this._input.getText(new antlr4.Interval(localctx._operandos_factor.start,localctx._operandos_factor.stop))).match(REGEX_ID)) {
 	            			this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables[this.currVar]);
 	            		} else if((localctx._operandos_factor == null ? null : this._input.getText(new antlr4.Interval(localctx._operandos_factor.start,localctx._operandos_factor.stop))).match(REGEX_CTE_ENT)) {
-	            			let constant = this.FunctionDir.addVar('c', 'entero', this.currFunc, false, true);
+	            			let constant = this.FunctionDir.addVar(this.currVar, 'entero', this.currFunc, false, true);
 	            			this.OperandStack.push(constant);
 	            		} else if((localctx._operandos_factor == null ? null : this._input.getText(new antlr4.Interval(localctx._operandos_factor.start,localctx._operandos_factor.stop))).match(REGEX_CTE_FLOT)) {
-	            			let constant = this.FunctionDir.addVar('c', 'flotante', this.currFunc, false, true);
+	            			let constant = this.FunctionDir.addVar(this.currVar, 'flotante', this.currFunc, false, true);
 	            			this.OperandStack.push(constant);
 	            		} 
 	            	

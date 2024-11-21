@@ -102,7 +102,7 @@ condicion:
 	SI LPAR expresion RPAR {
 		// Semantic action #4.1
 		const expResult = this.OperandStack.pop();
-		if(expResult.type != 'entero'){
+		if(this.FunctionDir.getVariableType(expResult) != 'entero'){
 			console.error("Expected integer expression result on if statement")
 		} else {
 			this.QuadruplesQueue.addQuadruple(13, expResult, null, undefined);
@@ -127,7 +127,7 @@ ciclo:
 	} LPAR expresion RPAR {
 		// Semantic action #5.2
 		const expResult = this.OperandStack.pop();
-		if(expResult.type != 'entero'){
+		if(this.FunctionDir.getVariableType(expResult) != 'entero'){
 			console.error("Expected integer expression result on if statement")
 		} else {
 			this.QuadruplesQueue.addQuadruple(13, expResult, null, undefined);
@@ -150,7 +150,7 @@ llamada:
 		}
 	} LPAR {
 		// Semantic action 6.2.2
-		this.QuadruplesQueue.addQuadruple(14, this.calledFunction, null, null);
+		this.QuadruplesQueue.addQuadruple(15, this.calledFunction, null, null);
 		this.parameterCounter = 0;
 	} lista_expresiones* {
 		if(this.FunctionDir.functions[this.calledFunction].parameters[this.parameterCounter] !== undefined){
@@ -158,7 +158,7 @@ llamada:
 		}
 	} RPAR {
 		// Semantic action 6.2.5
-		this.QuadruplesQueue.addQuadruple(14, this.calledFunction, null, this.FunctionDir.functions[this.calledFunction].start);
+		this.QuadruplesQueue.addQuadruple(16, this.calledFunction, null, this.FunctionDir.functions[this.calledFunction].start);
 		delete this.calledFunction;
 	} SEMICOLON;
 lista_expresiones:
@@ -178,7 +178,7 @@ lista_expresiones:
 			console.error('Parameter does not match type declaration')
 		}
  
-		this.QuadruplesQueue.addQuadruple(14, exp, null, parameter);
+		this.QuadruplesQueue.addQuadruple(17, exp, null, parameter);
 
 		this.parameterCounter++;
 	} mas_expresiones*;
@@ -194,7 +194,8 @@ imprimibles:
 	}
 	| LETRERO {
 		// Semantic action #3.2
-		this.QuadruplesQueue.addQuadruple(10, null, null, $LETRERO.text);
+		let stringAddress = this.FunctionDir.addVar($LETRERO.text.substring(1, $LETRERO.text.length-1), 'letrero', this.currFunc, false, true);
+		this.QuadruplesQueue.addQuadruple(10, null, null, stringAddress);
 	};
 
 expresion:
@@ -213,8 +214,10 @@ expresion:
 			let rightOperand =  this.OperandStack.pop();
 			let leftOperand = this.OperandStack.pop();
 			let operator = this.OperatorStack.pop();
-			let resultType = this.SematicCube[operator][leftOperand.type][rightOperand.type];
-			let resultVariable = this.QuadruplesQueue.newTempVariable(resultType);
+			let rightType = this.FunctionDir.getVariableType(rightOperand);
+			let leftType = this.FunctionDir.getVariableType(leftOperand);
+			let resultType = this.SematicCube[operator][rightType][leftType];
+			let resultVariable = this.FunctionDir.addVar('t', resultType, this.currFunc, true);
 			this.OperandStack.push(resultVariable);
 			this.QuadruplesQueue.addQuadruple(this.SematicCube[operator]['code'], leftOperand, rightOperand, resultVariable);
 		}
@@ -301,10 +304,10 @@ factor:
 		if($operandos_factor.text.match(REGEX_ID)) {
 			this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables[this.currVar]);
 		} else if($operandos_factor.text.match(REGEX_CTE_ENT)) {
-			let constant = this.FunctionDir.addVar('c', 'entero', this.currFunc, false, true);
+			let constant = this.FunctionDir.addVar(this.currVar, 'entero', this.currFunc, false, true);
 			this.OperandStack.push(constant);
 		} else if($operandos_factor.text.match(REGEX_CTE_FLOT)) {
-			let constant = this.FunctionDir.addVar('c', 'flotante', this.currFunc, false, true);
+			let constant = this.FunctionDir.addVar(this.currVar, 'flotante', this.currFunc, false, true);
 			this.OperandStack.push(constant);
 		} 
 	};

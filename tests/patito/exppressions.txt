@@ -6,11 +6,15 @@ D, E: flotante;
 
 inicio
 {
+    A = 1;
+    B = 2;
     si (A < B) {
-        A = 1;
-    } sino {
         A = 2;
+        escribe("Resultado 1");
+    } sino {
+        A = 3;
+        escribe("Resultado 2!");
     };
-    A = 6;
+    escribe(A * B);
 }
 fin

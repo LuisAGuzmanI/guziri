@@ -36,7 +36,7 @@ nula fibonacci(n:entero)
                 contador = contador + 1;
             };
 
-            escribe("Fibonacci ", n, " :", a + b);
+            escribe("Fibonacci ", n, " :", f_2);
         };
 
     }

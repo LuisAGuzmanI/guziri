@@ -28,5 +28,6 @@ inicio
     D = 1;
 
     suma(A, D);
+    escribe("Yeah!");
 }
 fin

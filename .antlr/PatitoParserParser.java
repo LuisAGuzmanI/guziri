@@ -1068,7 +1068,7 @@ public class PatitoParserParser extends Parser {
 
 					// Semantic action #4.1
 					const expResult = this.OperandStack.pop();
-					if(expResult.type != 'entero'){
+					if(this.FunctionDir.getVariableType(expResult) != 'entero'){
 						console.error("Expected integer expression result on if statement")
 					} else {
 						this.QuadruplesQueue.addQuadruple(13, expResult, null, undefined);
@@ -1191,7 +1191,7 @@ public class PatitoParserParser extends Parser {
 
 					// Semantic action #5.2
 					const expResult = this.OperandStack.pop();
-					if(expResult.type != 'entero'){
+					if(this.FunctionDir.getVariableType(expResult) != 'entero'){
 						console.error("Expected integer expression result on if statement")
 					} else {
 						this.QuadruplesQueue.addQuadruple(13, expResult, null, undefined);
@@ -1263,7 +1263,7 @@ public class PatitoParserParser extends Parser {
 			match(LPAR);
 
 					// Semantic action 6.2.2
-					this.QuadruplesQueue.addQuadruple(14, this.calledFunction, null, null);
+					this.QuadruplesQueue.addQuadruple(15, this.calledFunction, null, null);
 					this.parameterCounter = 0;
 				
 			setState(216);
@@ -1289,7 +1289,7 @@ public class PatitoParserParser extends Parser {
 			match(RPAR);
 
 					// Semantic action 6.2.5
-					this.QuadruplesQueue.addQuadruple(14, this.calledFunction, null, this.FunctionDir.functions[this.calledFunction].start);
+					this.QuadruplesQueue.addQuadruple(16, this.calledFunction, null, this.FunctionDir.functions[this.calledFunction].start);
 					delete this.calledFunction;
 				
 			setState(222);
@@ -1349,7 +1349,7 @@ public class PatitoParserParser extends Parser {
 						console.error('Parameter does not match type declaration')
 					}
 			 
-					this.QuadruplesQueue.addQuadruple(14, exp, null, parameter);
+					this.QuadruplesQueue.addQuadruple(17, exp, null, parameter);
 
 					this.parameterCounter++;
 				
@@ -1631,7 +1631,8 @@ public class PatitoParserParser extends Parser {
 				((ImprimiblesContext)_localctx).LETRERO = match(LETRERO);
 
 						// Semantic action #3.2
-						this.QuadruplesQueue.addQuadruple(10, null, null, (((ImprimiblesContext)_localctx).LETRERO!=null?((ImprimiblesContext)_localctx).LETRERO.getText():null));
+						let stringAddress = this.FunctionDir.addVar((((ImprimiblesContext)_localctx).LETRERO!=null?((ImprimiblesContext)_localctx).LETRERO.getText():null).substring(1, (((ImprimiblesContext)_localctx).LETRERO!=null?((ImprimiblesContext)_localctx).LETRERO.getText():null).length-1), 'letrero', this.currFunc, false, true);
+						this.QuadruplesQueue.addQuadruple(10, null, null, stringAddress);
 					
 				}
 				break;
@@ -1700,8 +1701,10 @@ public class PatitoParserParser extends Parser {
 							let rightOperand =  this.OperandStack.pop();
 							let leftOperand = this.OperandStack.pop();
 							let operator = this.OperatorStack.pop();
-							let resultType = this.SematicCube[operator][leftOperand.type][rightOperand.type];
-							let resultVariable = this.QuadruplesQueue.newTempVariable(resultType);
+							let rightType = this.FunctionDir.getVariableType(rightOperand);
+							let leftType = this.FunctionDir.getVariableType(leftOperand);
+							let resultType = this.SematicCube[operator][rightType][leftType];
+							let resultVariable = this.FunctionDir.addVar('t', resultType, this.currFunc, true);
 							this.OperandStack.push(resultVariable);
 							this.QuadruplesQueue.addQuadruple(this.SematicCube[operator]['code'], leftOperand, rightOperand, resultVariable);
 						}
@@ -2112,10 +2115,10 @@ public class PatitoParserParser extends Parser {
 						if((((FactorContext)_localctx).operandos_factor!=null?_input.getText(((FactorContext)_localctx).operandos_factor.start,((FactorContext)_localctx).operandos_factor.stop):null).match(REGEX_ID)) {
 							this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables[this.currVar]);
 						} else if((((FactorContext)_localctx).operandos_factor!=null?_input.getText(((FactorContext)_localctx).operandos_factor.start,((FactorContext)_localctx).operandos_factor.stop):null).match(REGEX_CTE_ENT)) {
-							let constant = this.FunctionDir.addVar('c', 'entero', this.currFunc, false, true);
+							let constant = this.FunctionDir.addVar(this.currVar, 'entero', this.currFunc, false, true);
 							this.OperandStack.push(constant);
 						} else if((((FactorContext)_localctx).operandos_factor!=null?_input.getText(((FactorContext)_localctx).operandos_factor.start,((FactorContext)_localctx).operandos_factor.stop):null).match(REGEX_CTE_FLOT)) {
-							let constant = this.FunctionDir.addVar('c', 'flotante', this.currFunc, false, true);
+							let constant = this.FunctionDir.addVar(this.currVar, 'flotante', this.currFunc, false, true);
 							this.OperandStack.push(constant);
 						} 
 					
