@@ -8,11 +8,10 @@ inicio
 {
     A = 3;
     B = 2;
-    C = -B;
-    mientras (A < B) haz {
-        A = 2;
-        escribe("Entró");
-    };
-    escribe("Salió!", A * B + C);
+    C = 5+-A;
+    B = -A;
+    escribe("C!", C);
+    escribe("B!", B);
+    escribe("Coso!", 5 + - A);
 }
 fin

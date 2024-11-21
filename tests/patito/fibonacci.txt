@@ -27,7 +27,7 @@ nula fibonacci(n:entero)
         };
 
         si(n > 2) {
-            mientras(contador < n) haz
+            mientras(contador < n - 1) haz
             {
                 f = f_1 + f_2;
                 f_1 = f_2;

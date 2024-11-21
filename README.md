@@ -19,6 +19,10 @@ This project is an implementation of a compiler for a simple C-based programming
     Root file of the repository, currently not in use.
 * `/compiler`
     Implementations of the data structures used in the generation of intermediate code for the compiler.
+
+## Neural Points
+<img src="./NeuralPoints.png">
+
 ## Version #1
 
 ### ANTLR
@@ -203,7 +207,7 @@ A new class was created to handle the quadruple list for all of the following ne
 
 **4.2** Completes the if statement by filling in the jump position for an unconditional jump.
 
-**5.2** Generates an unconditional goto quadruple and sets up the jump location for else blocks.
+**4.3** Generates an unconditional goto quadruple and sets up the jump location for else blocks.
 
 #### 5. Cycles
 
@@ -211,7 +215,7 @@ A new class was created to handle the quadruple list for all of the following ne
 
 **5.2** Generates a gotoF (conditional jump) quadruple based on the result of an expression present on the operand stack, leaves jump position undefined.
 
-**5.2** Generates a goto quadruple to loop back to the start and fills in the exit jump location for the loop.
+**5.3** Generates a goto quadruple to loop back to the start and fills in the exit jump location for the loop.
 
 ## Version #4
 
@@ -266,7 +270,7 @@ Operator codes were implemented for quadruples, assigning each operator a numeri
 
 **6.1.4** Releases the variable table for the declared function, adds 'endfuncion' quadruple to signify the end of the function.
 
-##### 6.2 Module declaration
+##### 6.2 Module calling
 
 **6.2.1** Verifies the existence of the function in the function directory. Logs an error if the function is undefined.
 
@@ -277,6 +281,58 @@ Operator codes were implemented for quadruples, assigning each operator a numeri
 **6.2.4** Checks that the parameter counter points to a null element.
 
 **6.2.5** Adds a GOSUB quadruple to jump to the functions start address and resume execution there.
+
+## Version #5
+
+This version implements a Virtual Machine capable of exequting the quadruples created on the previous versions. For this, the previous code was moved into a `compile` function, which stores the quadruples, functions, constants and memmory requirements inside of a file ending with **obj.txt**. Such file would look like this:
+```
+11,,,1
+9,30000,,1000
+9,30001,,1001
+2,30003,1000,10000
+1,30002,10000,10001
+9,10001,,1002
+2,30004,1000,10002
+9,10002,,1001
+10,,,40000
+10,,,1002
+10,,,40001
+10,,,1001
+10,,,40002
+2,30006,1000,10003
+1,30005,10003,10004
+10,,,10004
+$
+
+$
+30000,3
+30001,2
+30002,5
+30003,0
+30004,0
+40000,C!
+40001,B!
+40002,Coso!
+30005,5
+30006,0
+$
+3,2,5,0,0,0,7,0,3
+```
+
+### Virtual Machine
+The virtual machine executes instructions sequentially, simulating the logic, control flow, and operations of the original program. It executes the quadruples using an instruction pointer which navigates the quadruples list and can be programatically moved for conditional and cyclical statements.
+
+#### Memory
+
+Memory is simulated as an array of variable length based on the ammount of resources used during the compilation stage. Memory addresses are converted dynamically to point to the position they correspond on this array so that quadruples are still executable as they are.
+
+#### Workflow
+
+1. The VM loads the quadruples and metadata (e.g., function definitions, constants) from a compiled .obj file.
+2. It interprets each quadruple:
+    * Arithmetic/logical operations are executed and results are stored in memory.
+    * Control flow instructions (e.g., jumps) manipulate the instruction pointer.
+    * Function calls and parameter handling are still under development.
 
 ## Testing
 1. To run the tests that verify the functionality of the data structure implementations, parser and lexer, you need to install `node`.

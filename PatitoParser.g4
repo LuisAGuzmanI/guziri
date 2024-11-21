@@ -89,11 +89,10 @@ asigna:
 		// Semantic action #2.2
 		this.OperatorStack.push($ASSIGN.text)
 	} expresion {
-		console.log($expresion.text)
 		// Semantic action #2.12
 		if(this.OperatorStack.top() == '=' ){
 			let leftOperand = this.OperandStack.pop();
-			let resultVariable =  this.OperandStack.pop();
+			let resultVariable = this.OperandStack.pop();
 			let operator = this.OperatorStack.pop();
 			this.QuadruplesQueue.addQuadruple(this.SematicCube[operator]['code'], leftOperand, null, resultVariable);
 		}
@@ -158,7 +157,7 @@ llamada:
 			console.error('Incorrect number of parameters on function (too few): ', this.calledFunction);
 		}
 	} RPAR {
-		// Semantic action 6.2.5
+		// Semantic action 6.2.4
 		this.QuadruplesQueue.addQuadruple(16, this.calledFunction, null, this.FunctionDir.functions[this.calledFunction].start);
 		delete this.calledFunction;
 	} SEMICOLON;

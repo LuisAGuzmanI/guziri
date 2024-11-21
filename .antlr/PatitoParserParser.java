@@ -969,7 +969,6 @@ public class PatitoParserParser extends Parser {
 	public static class AsignaContext extends ParserRuleContext {
 		public Token ID;
 		public Token ASSIGN;
-		public ExpresionContext expresion;
 		public TerminalNode ID() { return getToken(PatitoParserParser.ID, 0); }
 		public TerminalNode ASSIGN() { return getToken(PatitoParserParser.ASSIGN, 0); }
 		public ExpresionContext expresion() {
@@ -1002,13 +1001,12 @@ public class PatitoParserParser extends Parser {
 					this.OperatorStack.push((((AsignaContext)_localctx).ASSIGN!=null?((AsignaContext)_localctx).ASSIGN.getText():null))
 				
 			setState(175);
-			((AsignaContext)_localctx).expresion = expresion();
+			expresion();
 
-					console.log((((AsignaContext)_localctx).expresion!=null?_input.getText(((AsignaContext)_localctx).expresion.start,((AsignaContext)_localctx).expresion.stop):null))
 					// Semantic action #2.12
 					if(this.OperatorStack.top() == '=' ){
 						let leftOperand = this.OperandStack.pop();
-						let resultVariable =  this.OperandStack.pop();
+						let resultVariable = this.OperandStack.pop();
 						let operator = this.OperatorStack.pop();
 						this.QuadruplesQueue.addQuadruple(this.SematicCube[operator]['code'], leftOperand, null, resultVariable);
 					}
@@ -1290,7 +1288,7 @@ public class PatitoParserParser extends Parser {
 			setState(220);
 			match(RPAR);
 
-					// Semantic action 6.2.5
+					// Semantic action 6.2.4
 					this.QuadruplesQueue.addQuadruple(16, this.calledFunction, null, this.FunctionDir.functions[this.calledFunction].start);
 					delete this.calledFunction;
 				

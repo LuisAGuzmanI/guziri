@@ -790,9 +790,8 @@ export default class PatitoParserParser extends antlr4.Parser {
 	        		this.OperatorStack.push((localctx._ASSIGN == null ? null : localctx._ASSIGN.text))
 	        	
 	        this.state = 175;
-	        localctx._expresion = this.expresion();
+	        this.expresion();
 
-	        		console.log((localctx._expresion == null ? null : this._input.getText(new antlr4.Interval(localctx._expresion.start,localctx._expresion.stop))))
 	        		// Semantic action #2.12
 	        		if(this.OperatorStack.top() == '=' ){
 	        			let leftOperand = this.OperandStack.pop();
@@ -2582,7 +2581,6 @@ class AsignaContext extends antlr4.ParserRuleContext {
         this.ruleIndex = PatitoParserParser.RULE_asigna;
         this._ID = null;
         this._ASSIGN = null;
-        this._expresion = null;
     }
 
 	ID() {
