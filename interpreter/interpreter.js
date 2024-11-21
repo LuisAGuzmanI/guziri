@@ -66,6 +66,8 @@ export class VirtualMachine {
                 this.memory[this.getReducedMemoryAddress(dir)] = dir >= 40000 ? value : Number(value);
             })
 
+            console.log(this.memoryStartPoints)
+
         } catch (err) {
             console.error('Error loading quadruples:', err);
         }
@@ -100,19 +102,19 @@ export class VirtualMachine {
                     break;
 
                 case 5: // More than
-                    this.setValue(result, this.getValue(leftOperand) > this.getValue(rightOperand));
+                    this.setValue(result, Number(this.getValue(leftOperand) > this.getValue(rightOperand)));
                     break;
 
                 case 6: // Less than
-                    this.setValue(result, this.getValue(leftOperand) < this.getValue(rightOperand));
+                    this.setValue(result, Number(this.getValue(leftOperand) < this.getValue(rightOperand)));
                     break;
 
                 case 7: // Equals
-                    this.setValue(result, this.getValue(leftOperand) === this.getValue(rightOperand));
+                    this.setValue(result, Number(this.getValue(leftOperand) === this.getValue(rightOperand)));
                     break;
 
                 case 8: // Doesn't equal
-                    this.setValue(result, this.getValue(leftOperand) !== this.getValue(rightOperand));
+                    this.setValue(result, Number(this.getValue(leftOperand) !== this.getValue(rightOperand)));
                     break;
 
                 case 9: // Assignation

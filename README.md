@@ -326,6 +326,42 @@ The virtual machine executes instructions sequentially, simulating the logic, co
 
 Memory is simulated as an array of variable length based on the ammount of resources used during the compilation stage. Memory addresses are converted dynamically to point to the position they correspond on this array so that quadruples are still executable as they are.
 
+##### Accessing memory
+There are three functions used to set and access memory. The first of this we need to understand is `getReducedMemoryAddress`, which transforms the original memory address so that it access the reduced memory array, for instnce, the address **1000** will be converted to **0**, and following addresses are converted based on the ammount of variables required.
+
+```js
+getReducedMemoryAddress(address) {
+    const category = Math.floor(address / 5000);
+    address = category == 0 ? address - 1000 : address;
+    const place = address % 5000;
+    return this.memoryStartPoints[category] + place;
+}
+```
+
+`getValue` uses this function to access the correct position on the memmory array.
+```js
+getValue(address) {
+    return this.memory[this.getReducedMemoryAddress(address)];
+}
+```
+
+`setValue` uses the same function to set the correct position on the memmory array with a certain value.
+```js
+setValue(address, value) {
+    this.memory[this.getReducedMemoryAddress(address)] = value;
+}
+```
+
+Given a starting point array like this:
+```js
+[0,  5,  5, 14, 14, 14, 14, 26, 26]
+```
+
+At the end of an execution, the memmory array should look like this:
+```js
+[8, 7, 21, 13, 21, 0, 0, 0, 0, 1, 7, 0, 21, 7, 8, 1, 1, 1, 0, 0, 0, 1, 2, 2, 1, 1, 'Error', 'Fibonacci', ':', 'Fibonacci', ':', 'Fibonacci', ':', 'Fibonacci', ':']
+```
+
 #### Workflow
 
 1. The VM loads the quadruples and metadata (e.g., function definitions, constants) from a compiled .obj file.
