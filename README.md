@@ -286,37 +286,45 @@ Operator codes were implemented for quadruples, assigning each operator a numeri
 
 This version implements a Virtual Machine capable of exequting the quadruples created on the previous versions. For this, the previous code was moved into a `compile` function, which stores the quadruples, functions, constants and memmory requirements inside of a file ending with **obj.txt**. Such file would look like this:
 ```
-11,,,1
-9,30000,,1000
-9,30001,,1001
-2,30003,1000,10000
-1,30002,10000,10001
-9,10001,,1002
-2,30004,1000,10002
-9,10002,,1001
+11,,,16
+6,20000,30000,10000
+13,10000,,4
 10,,,40000
-10,,,1002
+7,20000,30001,10001
+13,10001,,7
+9,20001,,1001
+5,20000,30002,10002
+13,10002,,15
+15,factorial,,
+2,20000,30003,10003
+17,10003,,20000
+3,20001,20000,10004
+17,10004,,20001
+16,factorial,,1
+14,,,
+9,30004,,1000
 10,,,40001
-10,,,1001
+10,,,1000
+15,factorial,,
+17,1000,,20000
+17,30005,,20001
+16,factorial,,1
 10,,,40002
-2,30006,1000,10003
-1,30005,10003,10004
-10,,,10004
+10,,,1001
 $
-
+factorial,nula,1,2,0
 $
-30000,3
-30001,2
-30002,5
-30003,0
-30004,0
-40000,C!
-40001,B!
-40002,Coso!
-30005,5
-30006,0
+30000,0
+40000,Error: Factorial no está definido para números negativos.
+30001,0
+30002,0
+30003,1
+30004,5
+40001,Cálculo del factorial de 
+30005,1
+40002,Resultado: 
 $
-3,2,5,0,0,0,7,0,3
+2,0,5,0,0,0,6,0,3
 ```
 
 ### Virtual Machine
@@ -331,24 +339,39 @@ There are three functions used to set and access memory. The first of this we ne
 
 ```js
 getReducedMemoryAddress(address) {
-    const category = Math.floor(address / 5000);
+    const category = this.getMemoryCategory(address);
     address = category == 0 ? address - 1000 : address;
     const place = address % 5000;
-    return this.memoryStartPoints[category] + place;
+
+    if (category < 4 || category > 5) {
+        return this.memoryStartPoints[category] + place;
+    } else { // Checks for local memory
+        return this.localMemoryStack[this.currentLocalMemory].memoryStartPoints[category - 4] + place;
+    }
 }
 ```
 
 `getValue` uses this function to access the correct position on the memmory array.
 ```js
 getValue(address) {
-    return this.memory[this.getReducedMemoryAddress(address)];
+    const category = this.getMemoryCategory(address);
+    if (category < 4 || category > 5) {
+        return this.globalMemory[this.getReducedMemoryAddress(address)];
+    } else { // Checks for local memory
+        return this.localMemoryStack[this.currentLocalMemory].memory[this.getReducedMemoryAddress(address)];
+    }
 }
 ```
 
 `setValue` uses the same function to set the correct position on the memmory array with a certain value.
 ```js
 setValue(address, value) {
-    this.memory[this.getReducedMemoryAddress(address)] = value;
+    const category = this.getMemoryCategory(address);
+    if (category < 4 || category > 5) {
+        this.globalMemory[this.getReducedMemoryAddress(address)] = value;
+    } else { // Checks for local memory
+        this.localMemoryStack[this.currentLocalMemory].memory[this.getReducedMemoryAddress(address)] = value;
+    }
 }
 ```
 
