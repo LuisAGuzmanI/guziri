@@ -1,6 +1,6 @@
 programa testRecursion;
 
-vars a: entero;
+vars a, resultado: entero;
 
 nula factorial(n: entero, acumulador: entero)
 {
@@ -10,7 +10,7 @@ nula factorial(n: entero, acumulador: entero)
         };
 
         si(n == 0) {
-            escribe("Factorial calculado: ", acumulador);
+            resultado = acumulador;
         };
 
         si(n > 0) {
@@ -24,5 +24,6 @@ inicio
     a = 5;
     escribe("Cálculo del factorial de ", a);
     factorial(a, 1);
+    escribe("Resultado: ", resultado);
 }
 fin

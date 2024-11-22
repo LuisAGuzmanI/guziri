@@ -557,7 +557,7 @@ public class PatitoParserParser extends Parser {
 					this.currFunc = (((FuncsContext)_localctx).ID!=null?((FuncsContext)_localctx).ID.getText():null);
 
 					if(this.FunctionDir.hasFunction(this.currFunc)){
-						console.error(`La función ${this.currFunc} ya está definida`);
+						console.error(`Function ${this.currFunc} is already defined`);
 					}
 
 					this.FunctionDir.addFunction(this.currFunc, this.currType);
@@ -992,7 +992,13 @@ public class PatitoParserParser extends Parser {
 
 					// Semantic action #2.1
 					this.currVar = (((AsignaContext)_localctx).ID!=null?((AsignaContext)_localctx).ID.getText():null);
-					this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables[this.currVar]);
+					if(this.FunctionDir.functions[this.currFunc].variables[this.currVar]) {
+						this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables[this.currVar]);
+					} else if(this.FunctionDir.functions['global'].variables[this.currVar]) {
+						this.OperandStack.push(this.FunctionDir.functions['global'].variables[this.currVar]);
+					} else {
+						console.error(`Variable ${this.currVar} does not exist in this scope`);
+					}
 				
 			setState(173);
 			((AsignaContext)_localctx).ASSIGN = match(ASSIGN);
@@ -2108,6 +2114,8 @@ public class PatitoParserParser extends Parser {
 
 						this.currVar = (((FactorContext)_localctx).operandos_factor!=null?_input.getText(((FactorContext)_localctx).operandos_factor.start,((FactorContext)_localctx).operandos_factor.stop):null)
 
+						console.log('Variable global: ', this.currVar);
+
 						if((((FactorContext)_localctx).operandos_factor!=null?_input.getText(((FactorContext)_localctx).operandos_factor.start,((FactorContext)_localctx).operandos_factor.stop):null).match(REGEX_ID) && (((FactorContext)_localctx).operadores_signo!=null?_input.getText(((FactorContext)_localctx).operadores_signo.start,((FactorContext)_localctx).operadores_signo.stop):null) == '-') {
 							let rightOperand =  this.FunctionDir.functions[this.currFunc].variables[this.currVar];
 							let leftOperand = this.FunctionDir.addVar('0', 'entero', this.currFunc, false, true);
@@ -2124,7 +2132,13 @@ public class PatitoParserParser extends Parser {
 							}
 
 							if((((FactorContext)_localctx).operandos_factor!=null?_input.getText(((FactorContext)_localctx).operandos_factor.start,((FactorContext)_localctx).operandos_factor.stop):null).match(REGEX_ID)) {
-								this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables[this.currVar]);
+								if(this.FunctionDir.functions[this.currFunc].variables[this.currVar]) {
+									this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables[this.currVar]);
+								} else if(this.FunctionDir.functions['global'].variables[this.currVar]) {
+									this.OperandStack.push(this.FunctionDir.functions['global'].variables[this.currVar]);
+								} else {
+									console.error(`Variable ${this.currVar} does not exist in this scope`);
+								}
 							} else if((((FactorContext)_localctx).operandos_factor!=null?_input.getText(((FactorContext)_localctx).operandos_factor.start,((FactorContext)_localctx).operandos_factor.stop):null).match(REGEX_CTE_ENT)) {
 								let constant = this.FunctionDir.addVar(this.currVar, 'entero', this.currFunc, false, true);
 								this.OperandStack.push(constant);

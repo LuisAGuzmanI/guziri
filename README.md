@@ -362,13 +362,16 @@ At the end of an execution, the memmory array should look like this:
 [8, 7, 21, 13, 21, 0, 0, 0, 0, 1, 7, 0, 21, 7, 8, 1, 1, 1, 0, 0, 0, 1, 2, 2, 1, 1, 'Error', 'Fibonacci', ':', 'Fibonacci', ':', 'Fibonacci', ':', 'Fibonacci', ':']
 ```
 
+#### Memory Stack
+The `localMemoryStack` array manages isolated memory for each function call by pushing a new memory block for variables. A new instantce to the array is added each time the **ERA** quadruple is encountered, and one instances is popped every time the `ENDFUNC` quadruple is encountered.`currentLocalMemory` tracks the active context, and memory is popped when a function ends.
+
 #### Workflow
 
 1. The VM loads the quadruples and metadata (e.g., function definitions, constants) from a compiled .obj file.
 2. It interprets each quadruple:
     * Arithmetic/logical operations are executed and results are stored in memory.
     * Control flow instructions (e.g., jumps) manipulate the instruction pointer.
-    * Function calls and parameter handling are still under development.
+    * Function calls and parameter handling access specific local memory from the memory stack;.
 
 ## Testing
 1. To run the tests that verify the functionality of the data structure implementations, parser and lexer, you need to install `node`.

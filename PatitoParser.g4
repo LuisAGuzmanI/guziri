@@ -45,7 +45,7 @@ funcs:
 		this.currFunc = $ID.text;
 
 		if(this.FunctionDir.hasFunction(this.currFunc)){
-			console.error(`La función ${this.currFunc} ya está definida`);
+			console.error(`Function ${this.currFunc} is already defined`);
 		}
 
 		this.FunctionDir.addFunction(this.currFunc, this.currType);
@@ -84,7 +84,13 @@ asigna:
 	ID {
 		// Semantic action #2.1
 		this.currVar = $ID.text;
-		this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables[this.currVar]);
+		if(this.FunctionDir.functions[this.currFunc].variables[this.currVar]) {
+			this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables[this.currVar]);
+		} else if(this.FunctionDir.functions['global'].variables[this.currVar]) {
+			this.OperandStack.push(this.FunctionDir.functions['global'].variables[this.currVar]);
+		} else {
+			console.error(`Variable ${this.currVar} does not exist in this scope`);
+		}
 	} ASSIGN {
 		// Semantic action #2.2
 		this.OperatorStack.push($ASSIGN.text)
@@ -297,6 +303,8 @@ factor:
 
 		this.currVar = $operandos_factor.text
 
+		console.log('Variable global: ', this.currVar);
+
 		if($operandos_factor.text.match(REGEX_ID) && $operadores_signo.text == '-') {
 			let rightOperand =  this.FunctionDir.functions[this.currFunc].variables[this.currVar];
 			let leftOperand = this.FunctionDir.addVar('0', 'entero', this.currFunc, false, true);
@@ -313,7 +321,13 @@ factor:
 			}
 
 			if($operandos_factor.text.match(REGEX_ID)) {
-				this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables[this.currVar]);
+				if(this.FunctionDir.functions[this.currFunc].variables[this.currVar]) {
+					this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables[this.currVar]);
+				} else if(this.FunctionDir.functions['global'].variables[this.currVar]) {
+					this.OperandStack.push(this.FunctionDir.functions['global'].variables[this.currVar]);
+				} else {
+					console.error(`Variable ${this.currVar} does not exist in this scope`);
+				}
 			} else if($operandos_factor.text.match(REGEX_CTE_ENT)) {
 				let constant = this.FunctionDir.addVar(this.currVar, 'entero', this.currFunc, false, true);
 				this.OperandStack.push(constant);

@@ -456,7 +456,7 @@ export default class PatitoParserParser extends antlr4.Parser {
 	        		this.currFunc = (localctx._ID == null ? null : localctx._ID.text);
 
 	        		if(this.FunctionDir.hasFunction(this.currFunc)){
-	        			console.error(`La función ${this.currFunc} ya está definida`);
+	        			console.error(`Function ${this.currFunc} is already defined`);
 	        		}
 
 	        		this.FunctionDir.addFunction(this.currFunc, this.currType);
@@ -781,7 +781,13 @@ export default class PatitoParserParser extends antlr4.Parser {
 
 	        		// Semantic action #2.1
 	        		this.currVar = (localctx._ID == null ? null : localctx._ID.text);
-	        		this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables[this.currVar]);
+	        		if(this.FunctionDir.functions[this.currFunc].variables[this.currVar]) {
+	        			this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables[this.currVar]);
+	        		} else if(this.FunctionDir.functions['global'].variables[this.currVar]) {
+	        			this.OperandStack.push(this.FunctionDir.functions['global'].variables[this.currVar]);
+	        		} else {
+	        			console.error(`Variable ${this.currVar} does not exist in this scope`);
+	        		}
 	        	
 	        this.state = 173;
 	        localctx._ASSIGN = this.match(PatitoParserParser.ASSIGN);
@@ -795,7 +801,7 @@ export default class PatitoParserParser extends antlr4.Parser {
 	        		// Semantic action #2.12
 	        		if(this.OperatorStack.top() == '=' ){
 	        			let leftOperand = this.OperandStack.pop();
-	        			let resultVariable =  this.OperandStack.pop();
+	        			let resultVariable = this.OperandStack.pop();
 	        			let operator = this.OperatorStack.pop();
 	        			this.QuadruplesQueue.addQuadruple(this.SematicCube[operator]['code'], leftOperand, null, resultVariable);
 	        		}
@@ -1003,7 +1009,7 @@ export default class PatitoParserParser extends antlr4.Parser {
 	        this.state = 220;
 	        this.match(PatitoParserParser.RPAR);
 
-	        		// Semantic action 6.2.5
+	        		// Semantic action 6.2.4
 	        		this.QuadruplesQueue.addQuadruple(16, this.calledFunction, null, this.FunctionDir.functions[this.calledFunction].start);
 	        		delete this.calledFunction;
 	        	
@@ -1618,6 +1624,8 @@ export default class PatitoParserParser extends antlr4.Parser {
 
 	            		this.currVar = (localctx._operandos_factor == null ? null : this._input.getText(new antlr4.Interval(localctx._operandos_factor.start,localctx._operandos_factor.stop)))
 
+	            		console.log('Variable global: ', this.currVar);
+
 	            		if((localctx._operandos_factor == null ? null : this._input.getText(new antlr4.Interval(localctx._operandos_factor.start,localctx._operandos_factor.stop))).match(REGEX_ID) && (localctx._operadores_signo == null ? null : this._input.getText(new antlr4.Interval(localctx._operadores_signo.start,localctx._operadores_signo.stop))) == '-') {
 	            			let rightOperand =  this.FunctionDir.functions[this.currFunc].variables[this.currVar];
 	            			let leftOperand = this.FunctionDir.addVar('0', 'entero', this.currFunc, false, true);
@@ -1634,7 +1642,13 @@ export default class PatitoParserParser extends antlr4.Parser {
 	            			}
 
 	            			if((localctx._operandos_factor == null ? null : this._input.getText(new antlr4.Interval(localctx._operandos_factor.start,localctx._operandos_factor.stop))).match(REGEX_ID)) {
-	            				this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables[this.currVar]);
+	            				if(this.FunctionDir.functions[this.currFunc].variables[this.currVar]) {
+	            					this.OperandStack.push(this.FunctionDir.functions[this.currFunc].variables[this.currVar]);
+	            				} else if(this.FunctionDir.functions['global'].variables[this.currVar]) {
+	            					this.OperandStack.push(this.FunctionDir.functions['global'].variables[this.currVar]);
+	            				} else {
+	            					console.error(`Variable ${this.currVar} does not exist in this scope`);
+	            				}
 	            			} else if((localctx._operandos_factor == null ? null : this._input.getText(new antlr4.Interval(localctx._operandos_factor.start,localctx._operandos_factor.stop))).match(REGEX_CTE_ENT)) {
 	            				let constant = this.FunctionDir.addVar(this.currVar, 'entero', this.currFunc, false, true);
 	            				this.OperandStack.push(constant);
