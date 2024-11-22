@@ -9,6 +9,7 @@ export class VirtualMachine {
         this.functions = {};
         this.callStack = [];
         this.localMemoryStack = [];
+        this.currentLocalMemory = -1;
     }
 
     getMemoryCategory(address) {
@@ -23,7 +24,7 @@ export class VirtualMachine {
         if (category < 4 || category > 5) {
             return this.memoryStartPoints[category] + place;
         } else { // Checks for local memory
-            return this.localMemoryStack[this.localMemoryStack.length - 1].memoryStartPoints[category - 4] + place;
+            return this.localMemoryStack[this.currentLocalMemory].memoryStartPoints[category - 4] + place;
         }
 
     }
@@ -33,7 +34,7 @@ export class VirtualMachine {
         if (category < 4 || category > 5) {
             return this.globalMemory[this.getReducedMemoryAddress(address)];
         } else { // Checks for local memory
-            return this.localMemoryStack[this.localMemoryStack.length - 1].memory[this.getReducedMemoryAddress(address)];
+            return this.localMemoryStack[this.currentLocalMemory].memory[this.getReducedMemoryAddress(address)];
         }
     }
 
@@ -42,7 +43,7 @@ export class VirtualMachine {
         if (category < 4 || category > 5) {
             this.globalMemory[this.getReducedMemoryAddress(address)] = value;
         } else { // Checks for local memory
-            this.localMemoryStack[this.localMemoryStack.length - 1].memory[this.getReducedMemoryAddress(address)] = value;
+            this.localMemoryStack[this.currentLocalMemory].memory[this.getReducedMemoryAddress(address)] = value;
         }
     }
 
@@ -174,6 +175,7 @@ export class VirtualMachine {
                 case 14: // End Function
                     this.localMemoryStack.pop();
                     instructionPointer = this.callStack.pop();
+                    this.currentLocalMemory--;
                     break;
 
                 case 15: // Activation Record (era)
@@ -187,10 +189,14 @@ export class VirtualMachine {
                 case 16: // Go to Subroutine (gosub)
                     this.callStack.push(instructionPointer);
                     instructionPointer = result;
+                    this.currentLocalMemory++;
                     continue;
 
                 case 17: // Parameter
-                    this.setValue(result, this.getValue(leftOperand));
+                    let parameterValue = this.getValue(leftOperand);
+                    this.currentLocalMemory++;
+                    this.setValue(result, parameterValue);
+                    this.currentLocalMemory--;
                     break;
 
                 default:

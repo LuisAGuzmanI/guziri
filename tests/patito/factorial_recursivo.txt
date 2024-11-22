@@ -1,0 +1,28 @@
+programa testRecursion;
+
+vars a: entero;
+
+nula factorial(n: entero, acumulador: entero)
+{
+    {
+        si(n < 0) {
+            escribe("Error: Factorial no está definido para números negativos.");
+        };
+
+        si(n == 0) {
+            escribe("Factorial calculado: ", acumulador);
+        };
+
+        si(n > 0) {
+            factorial(n - 1, acumulador * n);
+        };
+    }
+};
+
+inicio
+{
+    a = 5;
+    escribe("Cálculo del factorial de ", a);
+    factorial(a, 1);
+}
+fin
