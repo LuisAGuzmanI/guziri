@@ -44,7 +44,7 @@ nula fibonacci(n:entero)
 
 inicio
 {
-    a = 3;
-    fibonacci(a*2 + 1);
+    a = 6;
+    fibonacci(a);
 }
 fin

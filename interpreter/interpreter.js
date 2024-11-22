@@ -5,23 +5,45 @@ export class VirtualMachine {
         this.quadruples = [];
         this.fileName = fileName;
         this.memoryStartPoints = [];
-        this.memory = [];
+        this.globalMemory = [];
         this.functions = {};
+        this.callStack = [];
+        this.localMemoryStack = [];
+    }
+
+    getMemoryCategory(address) {
+        return Math.floor(address / 5000);
     }
 
     getReducedMemoryAddress(address) {
-        const category = Math.floor(address / 5000);
+        const category = this.getMemoryCategory(address);
         address = category == 0 ? address - 1000 : address;
         const place = address % 5000;
-        return this.memoryStartPoints[category] + place;
+
+        if (category < 4 || category > 5) {
+            return this.memoryStartPoints[category] + place;
+        } else { // Checks for local memory
+            return this.localMemoryStack[this.localMemoryStack.length - 1].memoryStartPoints[category - 4] + place;
+        }
+
     }
 
     getValue(address) {
-        return this.memory[this.getReducedMemoryAddress(address)];
+        const category = this.getMemoryCategory(address);
+        if (category < 4 || category > 5) {
+            return this.globalMemory[this.getReducedMemoryAddress(address)];
+        } else { // Checks for local memory
+            return this.localMemoryStack[this.localMemoryStack.length - 1].memory[this.getReducedMemoryAddress(address)];
+        }
     }
 
     setValue(address, value) {
-        this.memory[this.getReducedMemoryAddress(address)] = value;
+        const category = this.getMemoryCategory(address);
+        if (category < 4 || category > 5) {
+            this.globalMemory[this.getReducedMemoryAddress(address)] = value;
+        } else { // Checks for local memory
+            this.localMemoryStack[this.localMemoryStack.length - 1].memory[this.getReducedMemoryAddress(address)] = value;
+        }
     }
 
     async loadObj() {
@@ -39,15 +61,21 @@ export class VirtualMachine {
                 const [operator, leftOperand, rightOperand, result] = line.split(',').map(value => value.trim());
                 return {
                     operator: Number(operator),
-                    leftOperand: leftOperand !== '' ? Number(leftOperand) : null,
+                    leftOperand: leftOperand !== '' ? (operator !== '15' ? Number(leftOperand) : leftOperand) : null,
                     rightOperand: rightOperand !== '' ? Number(rightOperand) : null,
                     result: result !== '' ? Number(result) : null
                 };
             });
 
             f.split('\n').map(line => {
-                const [name, type, start] = line.split(',').map(value => value.trim());
-                this.functions[name] = { name, type, start }
+                const [name, type, start, intResources, floatResources] = line.split(',').map(value => value.trim());
+                this.functions[name] = {
+                    name,
+                    type,
+                    start: Number(start),
+                    intResources: Number(intResources),
+                    floatResources: Number(floatResources),
+                }
             })
 
             let totalMemory = 0;
@@ -59,14 +87,12 @@ export class VirtualMachine {
                 totalMemory += element;
             });
 
-            this.memory = new Array(totalMemory).fill(null);
+            this.globalMemory = new Array(totalMemory).fill(null);
 
             c.split('\n').map(line => {
                 const [dir, value] = line.split(',').map(value => value.trim());
-                this.memory[this.getReducedMemoryAddress(dir)] = dir >= 40000 ? value : Number(value);
+                this.globalMemory[this.getReducedMemoryAddress(dir)] = dir >= 40000 ? value : Number(value);
             })
-
-            console.log(this.memoryStartPoints)
 
         } catch (err) {
             console.error('Error loading quadruples:', err);
@@ -81,6 +107,8 @@ export class VirtualMachine {
         }
 
         let instructionPointer = 0;
+        // Era 
+        let name, type, start, intResources, floatResources;
 
         while (instructionPointer < this.quadruples.length) {
             let { operator, leftOperand, rightOperand, result } = this.quadruples[instructionPointer];
@@ -144,20 +172,25 @@ export class VirtualMachine {
                     break;
 
                 case 14: // End Function
-                    console.log('ENDFUNCTION');
-                    return;
+                    this.localMemoryStack.pop();
+                    instructionPointer = this.callStack.pop();
+                    break;
 
                 case 15: // Activation Record (era)
-                    console.log('ERA');
+                    ({ name, type, start, intResources, floatResources } = this.functions[leftOperand]);
+                    this.localMemoryStack.push({
+                        memory: new Array(intResources + floatResources).fill(null),
+                        memoryStartPoints: [0, intResources],
+                    })
                     break;
 
                 case 16: // Go to Subroutine (gosub)
-                    console.log('GOSUB');
-                    // continue;
-                    break;
+                    this.callStack.push(instructionPointer);
+                    instructionPointer = result;
+                    continue;
 
                 case 17: // Parameter
-                    console.log('PARAMETER');
+                    this.setValue(result, this.getValue(leftOperand));
                     break;
 
                 default:

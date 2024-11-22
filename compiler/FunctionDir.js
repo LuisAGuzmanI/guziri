@@ -44,7 +44,7 @@ export class FunctionDir {
         if (this.functions[name]) {
             console.error('This function already exists');
         } else {
-            this.functions[name] = { name, type, variables: {}, start: null, parameters: [], localResources: 0 };
+            this.functions[name] = { name, type, variables: {}, start: null, parameters: [], localResources: { entero: 0, flotante: 0 } };
         }
     }
 
@@ -95,7 +95,7 @@ export class FunctionDir {
                 scope = 'global';
             } else {
                 scope = 'local';
-                this.functions[currentFunction].localResources++;
+                this.functions[currentFunction].localResources[type]++;
             }
             memoryAddress = this.memoryCounters[scope][type]++;
         }
@@ -109,6 +109,9 @@ export class FunctionDir {
     }
 
     releaseVarTable(currentFunction) {
+        // Resets local memory counters.
+        this.memoryCounters['local']['entero'] = 20000;
+        this.memoryCounters['local']['flotante'] = 25000;
         delete this.functions[currentFunction].variables;
     }
 

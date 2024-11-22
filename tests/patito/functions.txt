@@ -24,10 +24,11 @@ nula resta(num1: entero, num2: flotante)
 
 inicio
 {
-    A = 0;
-    D = 1;
+    A = 5;
+    D = 3;
 
     suma(A, D);
+    resta(A, D);
     escribe("Yeah!");
 }
 fin

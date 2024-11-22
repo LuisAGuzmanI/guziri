@@ -72,7 +72,7 @@ export const compile = async (fileName = 'functions', showQuadruples) => {
         for (const f in functions.functions) {
             let func = functions.functions[f];
             if (func.name != 'global') {
-                functionsText += `${func.name},${func.type},${func.start}\n`;
+                functionsText += `${func.name},${func.type},${func.start},${func.localResources.entero},${func.localResources.flotante}\n`;
             }
         }
 

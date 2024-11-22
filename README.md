@@ -1,4 +1,4 @@
-# Guziri
+# Patito - Compiler
 This project is an implementation of a compiler for a simple C-based programming laguage for the class *Advanced Applications Development in Computer Science (Group 502)*. The implementation is done in JavaScript using ANTLR. You can find the basic grammar [here](./Gramatica.pdf). 
 
 ## Student Information
