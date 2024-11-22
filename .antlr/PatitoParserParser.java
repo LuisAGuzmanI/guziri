@@ -2114,8 +2114,6 @@ public class PatitoParserParser extends Parser {
 
 						this.currVar = (((FactorContext)_localctx).operandos_factor!=null?_input.getText(((FactorContext)_localctx).operandos_factor.start,((FactorContext)_localctx).operandos_factor.stop):null)
 
-						console.log('Variable global: ', this.currVar);
-
 						if((((FactorContext)_localctx).operandos_factor!=null?_input.getText(((FactorContext)_localctx).operandos_factor.start,((FactorContext)_localctx).operandos_factor.stop):null).match(REGEX_ID) && (((FactorContext)_localctx).operadores_signo!=null?_input.getText(((FactorContext)_localctx).operadores_signo.start,((FactorContext)_localctx).operadores_signo.stop):null) == '-') {
 							let rightOperand =  this.FunctionDir.functions[this.currFunc].variables[this.currVar];
 							let leftOperand = this.FunctionDir.addVar('0', 'entero', this.currFunc, false, true);

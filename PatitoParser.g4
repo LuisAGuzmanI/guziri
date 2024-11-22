@@ -303,8 +303,6 @@ factor:
 
 		this.currVar = $operandos_factor.text
 
-		console.log('Variable global: ', this.currVar);
-
 		if($operandos_factor.text.match(REGEX_ID) && $operadores_signo.text == '-') {
 			let rightOperand =  this.FunctionDir.functions[this.currFunc].variables[this.currVar];
 			let leftOperand = this.FunctionDir.addVar('0', 'entero', this.currFunc, false, true);

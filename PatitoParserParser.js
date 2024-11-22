@@ -1624,8 +1624,6 @@ export default class PatitoParserParser extends antlr4.Parser {
 
 	            		this.currVar = (localctx._operandos_factor == null ? null : this._input.getText(new antlr4.Interval(localctx._operandos_factor.start,localctx._operandos_factor.stop)))
 
-	            		console.log('Variable global: ', this.currVar);
-
 	            		if((localctx._operandos_factor == null ? null : this._input.getText(new antlr4.Interval(localctx._operandos_factor.start,localctx._operandos_factor.stop))).match(REGEX_ID) && (localctx._operadores_signo == null ? null : this._input.getText(new antlr4.Interval(localctx._operadores_signo.start,localctx._operadores_signo.stop))) == '-') {
 	            			let rightOperand =  this.FunctionDir.functions[this.currFunc].variables[this.currVar];
 	            			let leftOperand = this.FunctionDir.addVar('0', 'entero', this.currFunc, false, true);
